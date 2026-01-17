@@ -418,7 +418,7 @@ namespace Global
             string json = StreamAsText(stream);
             return EasyObject.FromJson(json);
         }
-        public static EasyObject ResourceAsMyJson(Assembly assembly, string name)
+        public static EasyObject ResourceAsEasyObject(Assembly assembly, string name)
         {
             string json = ResourceAsText(assembly, name);
             return EasyObject.FromJson(json);
