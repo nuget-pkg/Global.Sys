@@ -14,27 +14,27 @@ namespace Global
         public static void Main(string[] args)
         {
             Log(args, "args");
-            Log(Sys.CheckFixedArguments("dummy", 1, args));
-            Echo("helloハロー©");
-            Echo(Sys.FindExePath("PROGRAM.dll"), """Sys.FindExePath("PROGRAM.dll")""");
-            string dllPath = Installer.InstallResourceDll(
-                typeof(Program).Assembly,
-                "C:\\dll-dir",
-                "Global.Sys:add2.dll");
-            Echo(dllPath, "dllPath");
-            IntPtr Handle = IntPtr.Zero;
-            Handle = Sys.LoadLibraryExW(
-                dllPath,
-                IntPtr.Zero,
-                Sys.LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH
-                );
-            if (Handle == IntPtr.Zero)
-            {
-                EasyObject.Log($"DLL not loaded: {dllPath}");
-                Environment.Exit(1);
-            }
-            CallAdd2(Handle);
-            CallGreeting(Handle);
+            //Log(Sys.CheckFixedArguments("dummy", 1, args));
+            //Echo("helloハロー©");
+            //Echo(Sys.FindExePath("PROGRAM.dll"), """Sys.FindExePath("PROGRAM.dll")""");
+            //string dllPath = Installer.InstallResourceDll(
+            //    typeof(Program).Assembly,
+            //    "C:\\dll-dir",
+            //    "Global.Sys:add2.dll");
+            //Echo(dllPath, "dllPath");
+            //IntPtr Handle = IntPtr.Zero;
+            //Handle = Sys.LoadLibraryExW(
+            //    dllPath,
+            //    IntPtr.Zero,
+            //    Sys.LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH
+            //    );
+            //if (Handle == IntPtr.Zero)
+            //{
+            //    EasyObject.Log($"DLL not loaded: {dllPath}");
+            //    Environment.Exit(1);
+            //}
+            //CallAdd2(Handle);
+            //CallGreeting(Handle);
             //Echo(Sys.RunCommand("ping", "-n", "2", "www.youtube.com"));
 
             //string asmPath = Sys.FindExePath("PROGRAM.dll");
