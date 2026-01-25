@@ -3,6 +3,7 @@
 //css_embed add2.dll
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using static Global.EasyObject;
 
 namespace Global
@@ -14,6 +15,8 @@ namespace Global
         public static void Main(string[] args)
         {
             Log(args, "args");
+            string stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
+            Log(stdout, "stdout");
             //Log(Sys.CheckFixedArguments("dummy", 1, args));
             //Echo("helloハロー©");
             //Echo(Sys.FindExePath("PROGRAM.dll"), """Sys.FindExePath("PROGRAM.dll")""");
