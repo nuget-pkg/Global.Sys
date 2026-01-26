@@ -10,7 +10,7 @@ using static Global.LiteDBProps;
 
 namespace Global;
 
-public class LiteDBProps
+public class LiteDBProps: IExportToPlainObject
 {
     public class Prop
     {
@@ -59,8 +59,12 @@ public class LiteDBProps
             var collection = connection.GetCollection<Prop>("properties");
             var result = collection.Find(x => x.Name == name).FirstOrDefault();
             connection.Commit();
-            if (result == null) return null;
-            return EasyObject.FromObject(result.Data);
+            if (result == null)
+            {
+                //return null;
+                return Null;
+            }
+            return FromObject(result.Data);
         }
     }
     public void Put(string name, dynamic data)
@@ -122,6 +126,18 @@ public class LiteDBProps
             connection.Commit();
         }
     }
+
+    public object ExportToPlainObject()
+    {
+        var keys = this.Keys;
+        EasyObject eo = NewArray();
+        foreach (var key in keys)
+        {
+            eo[key] = this.Get(key);
+        }
+        return eo.ToObject();
+    }
+
     public List<string> Keys
     {
         get
@@ -144,5 +160,9 @@ public class LiteDBProps
                 return list;
             }
         }
+    }
+    public override string ToString()
+    {
+        return FromObject(this).ToJson(indent: true);
     }
 }
