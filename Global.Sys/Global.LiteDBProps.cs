@@ -48,8 +48,10 @@ public class LiteDBProps: IExportToPlainObject
     public LiteDBProps(string appNam) : this(new DirectoryInfo(Dirs.ProfilePath(appNam)))
     {
     }
-    public EasyObject Get(string name)
+    public EasyObject Get(string name, object fallback = null)
     {
+        var keys = this.Keys;
+        if (!keys.Contains(name)) return FromObject(fallback);
         using (var connection = new LiteDatabase(new ConnectionString(this.filePath)
         {
             Connection = ConnectionType.Shared

@@ -31,6 +31,9 @@ namespace Global
             Echo(props.Get("list3").AsList);
             //Echo(props.Get("count").Cast<int>());
             Echo(props.Get("count2").IsNull);
+            Echo(props.Get("xyz", 0));
+            Echo(props.Get("zzz", new List<string>()));
+            Echo(props.Get("xxx", NewArray(1, 2, 3)));
         }
     }
 }
