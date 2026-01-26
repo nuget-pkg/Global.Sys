@@ -50,8 +50,8 @@ public class LiteDBProps: IExportToPlainObject
     }
     public EasyObject Get(string name, object fallback = null)
     {
-        var keys = this.Keys;
-        if (!keys.Contains(name)) return FromObject(fallback);
+        //var keys = this.Keys;
+        //if (!keys.Contains(name)) return FromObject(fallback);
         using (var connection = new LiteDatabase(new ConnectionString(this.filePath)
         {
             Connection = ConnectionType.Shared
@@ -63,8 +63,7 @@ public class LiteDBProps: IExportToPlainObject
             connection.Commit();
             if (result == null)
             {
-                //return null;
-                return Null;
+                return FromObject(fallback);
             }
             return FromObject(result.Data);
         }
