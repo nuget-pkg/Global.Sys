@@ -2,8 +2,10 @@
 //css_nuget EasyObject
 //css_embed add2.dll
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using Global;
 using static Global.EasyObject;
 
 namespace Global
@@ -17,56 +19,12 @@ namespace Global
             Log(args, "args");
             string stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
             Log(stdout, "stdout");
-            //Log(Sys.CheckFixedArguments("dummy", 1, args));
-            //Echo("helloハロー©");
-            //Echo(Sys.FindExePath("PROGRAM.dll"), """Sys.FindExePath("PROGRAM.dll")""");
-            //string dllPath = Installer.InstallResourceDll(
-            //    typeof(Program).Assembly,
-            //    "C:\\dll-dir",
-            //    "Global.Sys:add2.dll");
-            //Echo(dllPath, "dllPath");
-            //IntPtr Handle = IntPtr.Zero;
-            //Handle = Sys.LoadLibraryExW(
-            //    dllPath,
-            //    IntPtr.Zero,
-            //    Sys.LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH
-            //    );
-            //if (Handle == IntPtr.Zero)
-            //{
-            //    EasyObject.Log($"DLL not loaded: {dllPath}");
-            //    Environment.Exit(1);
-            //}
-            //CallAdd2(Handle);
-            //CallGreeting(Handle);
-            //Echo(Sys.RunCommand("ping", "-n", "2", "www.youtube.com"));
-
-            //string asmPath = Sys.FindExePath("PROGRAM.dll");
-            //System.Reflection.Assembly asm = System.Reflection.Assembly.LoadFrom(asmPath);
-            //object methodResult = Sys.CallAssemblyStaticMethod(asm, "PROGRAM.Api", "Add2", 777, 1);
-            //Echo(methodResult, "methodResult");
-            //asm = Sys.AssemblyForTypeName("Global.Program");
-            //Echo(asm == null);
-            //methodResult = Sys.CallAssemblyStaticMethod(asm, "Global.Program", "Add3", 11, 22, 33);
-            //Echo(methodResult, "methodResult");
-        }
-        public static int Add3(int a, int b, int c)
-        {
-            return a + b + c;
-        }
-        private static void CallAdd2(IntPtr Handle)
-        {
-            IntPtr Add2Ptr = Sys.GetProcAddress(Handle, "add2");
-            proto_add2 add2 = (proto_add2)Marshal.GetDelegateForFunctionPointer(Add2Ptr, typeof(proto_add2));
-            Echo(add2(11, 22));
-        }
-        private static void CallGreeting(IntPtr Handle)
-        {
-            IntPtr GreetingPtr = Sys.GetProcAddress(Handle, "greeting");
-            proto_greeting greeting = (proto_greeting)Marshal.GetDelegateForFunctionPointer(GreetingPtr, typeof(proto_greeting));
-            IntPtr namePtr = Sys.StringToUTF8Addr("トム©");
-            IntPtr result = greeting(namePtr);
-            Sys.FreeHGlobal(namePtr);
-            Echo(Sys.UTF8AddrToString(result));
+            var props = new LiteDBProps("myApp");
+            props.Put("abc", 123);
+            //Echo(props);
+            Console.WriteLine(props.Keys.Count);
+            Echo(new List<string>());
+            Echo(props.Keys);
         }
     }
 }
