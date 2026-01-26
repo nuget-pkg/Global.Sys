@@ -29,6 +29,8 @@ namespace Global
             props.Put("list", list);
             Echo(props);
             Echo(props.Get("list3").AsList);
+            //Echo(props.Get("count").Cast<int>());
+            Echo(props.Get("count2").IsNull);
         }
     }
 }
