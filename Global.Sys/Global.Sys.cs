@@ -42,13 +42,13 @@ namespace Global
         {
             return Path.GetFileNameWithoutExtension(Path.GetFileName(path));
         }
-        public static Assembly AssemblyForTypeName(string typeName)
+        public static Assembly? AssemblyForTypeName(string typeName)
         {
             Type type = Type.GetType(typeName);
             if (type == null) return null;
             return type.Assembly;
         }
-        public static object CallAssemblyStaticMethod(Assembly asm, string typeName, string methodName, params object[] args)
+        public static object? CallAssemblyStaticMethod(Assembly asm, string typeName, string methodName, params object[] args)
         {
             if (asm == null) return null;
             System.Type type = asm.GetType(typeName, false);
@@ -136,12 +136,12 @@ namespace Global
             return lines;
         }
         public static bool DebugFlag = false;
-        public static string FindExePath(string exe)
+        public static string? FindExePath(string exe)
         {
             string cwd = "";
             return FindExePath(exe, cwd);
         }
-        public static string FindExePath(string exe, string cwd)
+        public static string? FindExePath(string exe, string cwd)
         {
             exe = Environment.ExpandEnvironmentVariables(exe);
             if (Path.IsPathRooted(exe))
@@ -167,11 +167,11 @@ namespace Global
             }
             return null;
         }
-        public static string FindExePath(string exe, Assembly assembly)
+        public static string? FindExePath(string exe, Assembly assembly)
         {
             int bit = IntPtr.Size * 8;
             string cwd = AssemblyDirectory(assembly);
-            string result = FindExePath(exe, cwd);
+            string? result = FindExePath(exe, cwd);
             if (result == null)
             {
                 result = FindExePath(exe, $"{cwd}\\{bit}bit");
@@ -245,8 +245,8 @@ namespace Global
         }
         public static string GetStringFromUrl(string url)
         {
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            HttpWebRequest? request = WebRequest.Create(url) as HttpWebRequest;
+            HttpWebResponse response = (HttpWebResponse)request!.GetResponse();
             WebHeaderCollection header = response.Headers;
             using (var reader = new System.IO.StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
@@ -295,7 +295,7 @@ namespace Global
             }
             return false;
         }
-        public static bool LaunchProcess(string exePath, string[] args, Dictionary<string, string> vars = null)
+        public static bool LaunchProcess(string exePath, string[] args, Dictionary<string, string>? vars = null)
         {
             string argList = "";
             for (int i = 0; i < args.Length; i++)
@@ -356,7 +356,7 @@ namespace Global
         {
             return x.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz");
         }
-        public static int RunToConsole(string exePath, string[] args, Dictionary<string, string> vars = null)
+        public static int RunToConsole(string exePath, string[] args, Dictionary<string, string>? vars = null)
         {
             string argList = "";
             for (int i = 0; i < args.Length; i++)
@@ -427,7 +427,7 @@ namespace Global
             Stream stream = assembly.GetManifestResourceStream(resourceName);
             return stream;
         }
-        public static string StreamAsText(Stream stream)
+        public static string? StreamAsText(Stream? stream)
         {
             if (stream is null) return null; // "";
             long pos = stream.Position;
@@ -436,13 +436,13 @@ namespace Global
             stream.Position = pos;
             return text;
         }
-        public static string ResourceAsText(Assembly assembly, string name)
+        public static string? ResourceAsText(Assembly assembly, string name)
         {
             string resourceName = name.Contains(":") ? name.Replace(":", ".") : $"{AssemblyName(assembly)}.{name}";
             Stream stream = assembly.GetManifestResourceStream(resourceName);
             return StreamAsText(stream);
         }
-        public static byte[] StreamAsBytes(Stream stream)
+        public static byte[]? StreamAsBytes(Stream stream)
         {
             if (stream is null) return null;
             long pos = stream.Position;
@@ -451,23 +451,23 @@ namespace Global
             stream.Position = pos;
             return bytes;
         }
-        public static byte[] ResourceAsBytes(Assembly assembly, string name)
+        public static byte[]? ResourceAsBytes(Assembly assembly, string name)
         {
             string resourceName = name.Contains(":") ? name.Replace(":", ".") : $"{AssemblyName(assembly)}.{name}";
             Stream stream = assembly.GetManifestResourceStream(resourceName);
             return StreamAsBytes(stream);
         }
-        public static EasyObject StreamAsJson(Stream stream)
+        public static EasyObject? StreamAsJson(Stream stream)
         {
-            string json = StreamAsText(stream);
+            string? json = StreamAsText(stream);
             return EasyObject.FromJson(json);
         }
         public static EasyObject ResourceAsEasyObject(Assembly assembly, string name)
         {
-            string json = ResourceAsText(assembly, name);
+            string? json = ResourceAsText(assembly, name);
             return EasyObject.FromJson(json);
         }
-        public static byte[] ToUtf8Bytes(string s)
+        public static byte[]? ToUtf8Bytes(string s)
         {
             if (s is null) return null;
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(s);
