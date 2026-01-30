@@ -1,23 +1,20 @@
-//css_inc Global.Installer.cs
-//css_inc Global.JsonApiClient.cs
-//css_inc Global.JsonApiServer.cs
-//css_nuget EasyObject
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using static Global.EasyObject;
-
+//css_nuget EasyObject;
+//css_nuget LiteDB;
 namespace Global
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Net.NetworkInformation;
+    using System.Net.Sockets;
+    using System.Net;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Threading;
+    using static Global.EasyObject;
     public static class Sys
     {
         public static string GetCwd()

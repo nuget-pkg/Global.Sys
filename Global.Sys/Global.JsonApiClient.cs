@@ -1,9 +1,8 @@
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
 namespace Global
 {
+    using System;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
     public class JsonApiClient
     {
         IntPtr Handle = IntPtr.Zero;

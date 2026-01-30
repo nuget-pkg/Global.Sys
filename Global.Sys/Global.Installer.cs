@@ -1,13 +1,12 @@
-using System;
-using System.IO.Compression;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Reflection;
-using System.Text;
-
 namespace Global
 {
+    using System;
+    using System.IO.Compression;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Reflection;
+    using System.Text;
     public class Installer
     {
         public static string InstallZipFromURL(string url, string targetDir, string baseName)

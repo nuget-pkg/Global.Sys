@@ -1,68 +1,69 @@
-using System;
-using System.Reflection;
-using System.Threading;
-using static Global.EasyObject;
-
-namespace Global;
-public class JsonApiServer
+namespace Global
 {
-    public JsonApiServer()
+    using System;
+    using System.Reflection;
+    using System.Threading;
+    using static Global.EasyObject;
+    public class JsonApiServer
     {
-    }
-    public IntPtr HandleNativeCall(Type apiType, IntPtr nameAddr, IntPtr inputAddr)
-    {
-        var name = Sys.UTF8AddrToString(nameAddr);
-        var input = Sys.UTF8AddrToString(inputAddr);
-        EasyObject args = FromJson(input);
-        MethodInfo mi = apiType.GetMethod(name);
-        object result = null;
-        if (mi == null)
+        public JsonApiServer()
         {
-            result = $"API not found: {name}";
         }
-        else
+        public IntPtr HandleNativeCall(Type apiType, IntPtr nameAddr, IntPtr inputAddr)
         {
-            try
+            var name = Sys.UTF8AddrToString(nameAddr);
+            var input = Sys.UTF8AddrToString(inputAddr);
+            EasyObject args = FromJson(input);
+            MethodInfo mi = apiType.GetMethod(name);
+            object result = null;
+            if (mi == null)
             {
-                result = mi.Invoke(null, new object[] { args });
-                var okResult = new object[] { FromObject(result).ToObject() };
-                result = okResult;
+                result = $"API not found: {name}";
             }
-            catch (TargetInvocationException ex)
+            else
             {
-                result = ex.InnerException.ToString();
+                try
+                {
+                    result = mi.Invoke(null, new object[] { args });
+                    var okResult = new object[] { FromObject(result).ToObject() };
+                    result = okResult;
+                }
+                catch (TargetInvocationException ex)
+                {
+                    result = ex.InnerException.ToString();
+                }
             }
+            string output = FromObject(result).ToJson();
+            return Sys.StringToUTF8Addr(output);
         }
-        string output = FromObject(result).ToJson();
-        return Sys.StringToUTF8Addr(output);
-    }
-    public void HandleNativeFree(IntPtr resultAddr)
-    {
-        Sys.FreeHGlobal(resultAddr);
-    }
-    public string HandleDotNetCall(Type apiType, string name, string input)
-    {
-        EasyObject args = FromJson(input);
-        MethodInfo mi = apiType.GetMethod(name);
-        dynamic result = null;
-        if (mi == null)
+        public void HandleNativeFree(IntPtr resultAddr)
         {
-            result = $"API not found: {name}";
+            Sys.FreeHGlobal(resultAddr);
         }
-        else
+        public string HandleDotNetCall(Type apiType, string name, string input)
         {
-            try
+            EasyObject args = FromJson(input);
+            MethodInfo mi = apiType.GetMethod(name);
+            dynamic result = null;
+            if (mi == null)
             {
-                result = mi.Invoke(null, new object[] { args });
-                var okResult = new object[] { FromObject(result).ToObject() };
-                result = okResult;
+                result = $"API not found: {name}";
             }
-            catch (TargetInvocationException ex)
+            else
             {
-                result = ex.InnerException.ToString();
+                try
+                {
+                    result = mi.Invoke(null, new object[] { args });
+                    var okResult = new object[] { FromObject(result).ToObject() };
+                    result = okResult;
+                }
+                catch (TargetInvocationException ex)
+                {
+                    result = ex.InnerException.ToString();
+                }
             }
+            string output = FromObject(result).ToJson();
+            return output;
         }
-        string output = FromObject(result).ToJson();
-        return output;
     }
 }
