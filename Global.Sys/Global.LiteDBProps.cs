@@ -18,16 +18,16 @@ namespace Global
             {
                 get; set;
             }
-            public string Name
+            public string? Name
             {
                 get; set;
             }
-            public object Data
+            public object? Data
             {
                 get; set;
             }
         }
-        private string filePath = null;
+        private string? filePath = null;
         public LiteDBProps(DirectoryInfo di)
         {
             this.filePath = Path.Combine(di.FullName, "properties.litedb");
@@ -48,7 +48,7 @@ namespace Global
         public LiteDBProps(string appNam) : this(new DirectoryInfo(Dirs.ProfilePath(appNam)))
         {
         }
-        public EasyObject Get(string name, object fallback = null)
+        public EasyObject Get(string name, object? fallback = null)
         {
             //var keys = this.Keys;
             //if (!keys.Contains(name)) return FromObject(fallback);
@@ -151,11 +151,11 @@ namespace Global
                     connection.BeginTrans();
                     var collection = connection.GetCollection<Prop>("properties");
                     IEnumerable<Prop> all = collection.FindAll();
-                    IEnumerable<string> keys = all.Select(_ => _.Name);
+                    IEnumerable<string?> keys = all.Select(_ => _.Name);
                     var list = new List<string>();
                     foreach (var key in keys)
                     {
-                        list.Add(key);
+                        list.Add(key!);
                     }
                     connection.Commit();
                     return list;
