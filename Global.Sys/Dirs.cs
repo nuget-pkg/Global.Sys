@@ -1,7 +1,12 @@
 namespace Global
 {
     using System;
-    public static class Dirs
+#if GLOBAL_SYS
+    public
+ #else
+    internal
+#endif
+   static class Dirs
     {
         public static string ProfilePath()
         {

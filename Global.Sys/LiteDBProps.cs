@@ -1,4 +1,4 @@
-
+#if GLOBAL_SYS
 namespace Global
 {
     using Global;
@@ -68,7 +68,7 @@ namespace Global
                 return FromObject(result.Data);
             }
         }
-        public void Put(string name, dynamic data)
+        public void Put(string name, dynamic? data)
         {
             if (data is EasyObject) data = ((EasyObject)data).ToObject();
             using (var connection = new LiteDatabase(new ConnectionString(this.filePath)
@@ -128,7 +128,7 @@ namespace Global
             }
         }
 
-        public object ExportToPlainObject()
+        public object? ExportToPlainObject()
         {
             var keys = this.Keys;
             EasyObject eo = NewArray();
@@ -168,3 +168,4 @@ namespace Global
         }
     }
 }
+#endif

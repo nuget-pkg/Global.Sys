@@ -2,11 +2,12 @@
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-		<Version>2026.0208.1207.22</Version>
-		<Nullable>disable</Nullable>
+		<Version>2026.0208.1755.24</Version>
+		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>
 		<PlatformTarget>AnyCPU</PlatformTarget>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<NoWarn></NoWarn>
 		<Authors>JavaCommons</Authors>
 		<Company>JavaCommons Technologies</Company>
@@ -34,6 +35,9 @@
 		<!--needef for project using xunit-->
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);GLOBAL_SYS</DefineConstants>
+	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="System" />
@@ -55,7 +59,7 @@
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="EasyObject" Version="2026.207.1825.58" />
+	  <PackageReference Include="EasyObject" Version="2026.208.1702.44" />
 	  <PackageReference Include="LiteDB" Version="5.0.21" />
 	</ItemGroup>
 </Project>

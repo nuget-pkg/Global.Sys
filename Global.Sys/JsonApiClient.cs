@@ -3,45 +3,49 @@ namespace Global
     using System;
     using System.Reflection;
     using System.Runtime.InteropServices;
-    public class JsonApiClient
+
+#if GLOBAL_SYS
+    public
+ #else
+    internal
+#endif
+    class JsonApiClient
     {
         IntPtr Handle = IntPtr.Zero;
         IntPtr CallPtr = IntPtr.Zero;
-        IntPtr FreePtr = IntPtr.Zero;
-        delegate IntPtr proto_Call(IntPtr pName, IntPtr pArgs);
-        delegate void proto_Free(IntPtr pResult);
+        delegate IntPtr proto_Call(IntPtr name, IntPtr args);
         public JsonApiClient(string dllSpec)
         {
-            string dllPath = Sys.FindExePath(dllSpec);
+            string? dllPath = Sys.FindExePath(dllSpec);
             if (dllPath is null)
             {
                 EasyObject.Log(dllSpec, "dllSpec");
                 EasyObject.Log(dllPath, "dllPath");
                 Environment.Exit(1);
             }
-            this.LoadDll(dllPath);
+            this.LoadDll(dllPath!);
         }
         public JsonApiClient(string dllSpec, string cwd)
         {
-            string dllPath = Sys.FindExePath(dllSpec, cwd);
+            string? dllPath = Sys.FindExePath(dllSpec, cwd);
             if (dllPath is null)
             {
                 EasyObject.Log(dllSpec, "dllSpec");
                 EasyObject.Log(dllPath, "dllPath");
                 Environment.Exit(1);
             }
-            this.LoadDll(dllPath);
+            this.LoadDll(dllPath!);
         }
         public JsonApiClient(string dllSpec, Assembly assembly)
         {
-            string dllPath = Sys.FindExePath(dllSpec, assembly);
+            string? dllPath = Sys.FindExePath(dllSpec, assembly);
             if (dllPath is null)
             {
                 EasyObject.Log(dllSpec, "dllSpec");
                 EasyObject.Log(dllPath, "dllPath");
                 Environment.Exit(1);
             }
-            this.LoadDll(dllPath);
+            this.LoadDll(dllPath!);
         }
         private void LoadDll(string dllPath)
         {
@@ -61,34 +65,26 @@ namespace Global
                 EasyObject.Log("Call() not found");
                 Environment.Exit(1);
             }
-            this.FreePtr = Sys.GetProcAddress(Handle, "Free");
-            if (this.FreePtr == IntPtr.Zero)
-            {
-                EasyObject.Log("Free() not found");
-                Environment.Exit(1);
-            }
         }
         public EasyObject Call(string name, EasyObject args)
         {
-            proto_Call pCall = (proto_Call)Marshal.GetDelegateForFunctionPointer(this.CallPtr, typeof(proto_Call));
-            proto_Free pFree = (proto_Free)Marshal.GetDelegateForFunctionPointer(this.FreePtr, typeof(proto_Free));
             IntPtr pName = Sys.StringToUTF8Addr(name);
+            proto_Call pCall = (proto_Call)Marshal.GetDelegateForFunctionPointer(this.CallPtr, typeof(proto_Call));
             var argsJson = args.ToJson();
             IntPtr pArgsJson = Sys.StringToUTF8Addr(argsJson);
             IntPtr pResult = pCall(pName, pArgsJson);
             string result = Sys.UTF8AddrToString(pResult);
-            pFree(pResult);
-            Sys.FreeHGlobal(pName);
-            Sys.FreeHGlobal(pArgsJson);
             result = result.Trim();
+            Marshal.FreeHGlobal(pName);
+            Marshal.FreeHGlobal(pArgsJson);
             if (result.StartsWith("\""))
             {
-                string error = EasyObject.FromJson(result).Cast<string>();
+                string error = EasyObject.FromJson(result)!.Cast<string>();
                 throw new Exception(error);
             }
             else if (result.StartsWith("["))
             {
-                var list = EasyObject.FromJson(result);
+                var list = EasyObject.FromJson(result)!;
                 if (list.Count == 0) return EasyObject.FromObject(null);
                 return list[0];
             }

@@ -7,7 +7,12 @@ namespace Global
     using System.Security.Cryptography;
     using System.Reflection;
     using System.Text;
-    public class Installer
+#if GLOBAL_SYS
+    public
+ #else
+    internal
+#endif
+    class Installer
     {
         public static string InstallZipFromURL(string url, string targetDir, string baseName)
         {
@@ -18,11 +23,14 @@ namespace Global
             SafeZipExtract(zipPath, installDir);
             return installDir;
         }
-        public static string InstallResourceDll(Assembly assembly, string targetDir, string name)
+        public static string? InstallResourceDll(Assembly assembly, string targetDir, string name)
         {
             string guid = Sys.GuidString();
             var dllBytes = Sys.ResourceAsBytes(assembly, name);
+            if (dllBytes == null) return null;
+#pragma warning disable SYSLIB0021
             SHA256 crypto = new SHA256CryptoServiceProvider();
+#pragma warning restore SYSLIB0021
             byte[] hashValue = crypto.ComputeHash(dllBytes);
             string sha256 = String.Join("", hashValue.Select(x => x.ToString("x2")).ToArray());
             string dllName = $"{Path.GetFileNameWithoutExtension(name.Replace(":", "-"))}-{sha256}.dll";
@@ -30,11 +38,14 @@ namespace Global
             SafeFileWrite(dllPath, dllBytes);
             return dllPath;
         }
-        public static string InstallResourceZip(Assembly assembly, string targetDir, string name)
+        public static string? InstallResourceZip(Assembly assembly, string targetDir, string name)
         {
             string guid = Sys.GuidString();
             var zipBytes = Sys.ResourceAsBytes(assembly, name);
+            if (zipBytes == null) return null;
+#pragma warning disable SYSLIB0021
             SHA256 crypto = new SHA256CryptoServiceProvider();
+#pragma warning restore SYSLIB0021
             byte[] hashValue = crypto.ComputeHash(zipBytes);
             string sha256 = String.Join("", hashValue.Select(x => x.ToString("x2")).ToArray());
             string zipName = $"{Path.GetFileNameWithoutExtension(name.Replace(":", "-"))}-{sha256}";
@@ -62,7 +73,7 @@ namespace Global
         public static void SafeFileWrite(string filePath, byte[] contents)
         {
             if (File.Exists(filePath)) return;
-            Console.Error.WriteLine($"[Log] Writing to {filePath}...");
+            //Console.Error.WriteLine($"[Log] Writing to {filePath}...");
             string guid = Sys.GuidString();
             Sys.PrepareForFile(filePath);
             File.WriteAllBytes($"{filePath}.{guid}", contents);
