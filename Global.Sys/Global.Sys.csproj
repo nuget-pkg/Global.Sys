@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-		<Version>2026.0209.2231.59</Version>
+		<Version>2026.0211.2343.17</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>
@@ -36,7 +36,7 @@
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 	<PropertyGroup>
-		<DefineConstants>$(DefineConstants);GLOBAL_SYS</DefineConstants>
+		<DefineConstants>$(DefineConstants);GLOBAL_SYS;USE_JSON_API</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
 		<Reference Include="Microsoft.CSharp" />
@@ -59,7 +59,7 @@
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="EasyObject" Version="2026.209.1745.17" />
+	  <PackageReference Include="EasyObject" Version="2026.211.44.32" />
 	  <PackageReference Include="LiteDB" Version="5.0.21" />
 	</ItemGroup>
 </Project>
