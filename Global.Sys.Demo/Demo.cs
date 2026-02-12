@@ -34,6 +34,10 @@ namespace Global
             Echo(props.Get("xyz", 0));
             Echo(props.Get("zzz", new List<string>()));
             Echo(props.Get("xxx", NewArray(1, 2, 3)));
+            var m = Sys.FindFirstMatch("abc", "xyz", "[a-z]");
+            Echo(m.Success);
+            m = Sys.FindFirstMatch("abc", "xyz");
+            Echo(m == null);
         }
     }
 }
