@@ -20,3 +20,4 @@ git tag -a "$tag" -m"$tag"
 git push origin "$tag"
 git push origin HEAD:main -f
 git remote -v
+start https://www.nuget.org/packages/Global.Sys/
