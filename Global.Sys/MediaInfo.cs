@@ -3,6 +3,7 @@ namespace Global
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text.RegularExpressions;
     using static Global.EasyObject;
 
 #if GLOBAL_SYS
@@ -73,6 +74,7 @@ namespace Global
                     ;
                 }
                 var info = NewObject("type", "file", "name", fileName, "site", "?");
+                fileName = Regex.Replace(fileName, "^[+]+", "");
                 List<string>? m;
                 m = Sys.FindFirstMatch(
                     fileName,

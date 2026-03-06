@@ -85,7 +85,7 @@ namespace Global
                     Log(mediaInfo, "(7.1)");
                     mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID＝103102541】.mp4");
                     Log(mediaInfo, "(7.2)");
-                    mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID=103102541】.mp4");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\++++【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID=103102541】.mp4");
                     Log(mediaInfo, "(7.3)");
                     mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
                     Log(mediaInfo, "(8)");
