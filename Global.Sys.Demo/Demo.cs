@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Global;
@@ -13,7 +14,8 @@ namespace Global
         {
             try
             {
-                if (true)
+                Sys.SetupConsoleUTF8();
+                if (false)
                 {
                     ShowDetail = true;
                     Log(args, "args");
@@ -104,6 +106,17 @@ namespace Global
                     var db3 = new LiteDBProps("myDb3");
                     db3.ImportFromCommonJson(json2);
                     Log(db3, "db3");
+                }
+                var playlistText = File.ReadAllText("assets/【ダウンロード候補】");
+                //Log(playlistText);
+                var playlistLines = Sys.TextToLines(playlistText);
+                //Log(playlistLines);
+                foreach (var line in playlistLines)
+                {
+                    Log(line);
+                    EasyObject? mediaInfo;
+                    mediaInfo = MediaInfo.ParseMediaUrl(line);
+                    Log(mediaInfo);
                 }
             }
             catch (Exception e)

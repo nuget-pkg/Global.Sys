@@ -15,6 +15,15 @@ namespace Global
     {
         public static EasyObject? ParseMediaUrl(string url)
         {
+            if (url.Contains("http://") || url.Contains("https://"))
+            {
+                var m = Sys.FindFirstMatch(url,
+                    "http[s]?://.+$");
+                if (m != null)
+                {
+                    url = m[0];
+                }
+            }
             if (url.StartsWith("http:") || url.StartsWith("https:"))
             {
                 var info = NewObject("type", "web", "url", url, "site", "?");
