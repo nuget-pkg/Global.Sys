@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -106,18 +107,24 @@ namespace Global
                     var db3 = new LiteDBProps("myDb3");
                     db3.ImportFromCommonJson(json2);
                     Log(db3, "db3");
+                    var playlistText = File.ReadAllText("assets/【ダウンロード候補】");
+                    var playlistLines = Sys.TextToLines(playlistText);
+                    foreach (var line in playlistLines)
+                    {
+                        Log(line);
+                        var mediaInfo2 = MediaInfo.ParseMediaUrl(line);
+                        Log(mediaInfo2);
+                    }
+                    var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
+                    Log(wc1, "wc1");
+                    var wc2 = Sys.ExpandWildcardList(
+                        "/p/@youtube-1080p/*",
+                        "/p/@youtube-2160p/*"
+                        );
+                    Log(wc2, "wc2");
                 }
-                var playlistText = File.ReadAllText("assets/【ダウンロード候補】");
-                //Log(playlistText);
-                var playlistLines = Sys.TextToLines(playlistText);
-                //Log(playlistLines);
-                foreach (var line in playlistLines)
-                {
-                    Log(line);
-                    EasyObject? mediaInfo;
-                    mediaInfo = MediaInfo.ParseMediaUrl(line);
-                    Log(mediaInfo);
-                }
+                Log(Sys.CygpathWindows("/c/home13/cmd"));
+                Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
             }
             catch (Exception e)
             {
