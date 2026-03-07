@@ -109,27 +109,31 @@ namespace Global
                     Sys.RunCommand("dir.exe", "*.m4a");
                     Sys.SetCwd("/mnt/p/@youtube-1080p");
                     Sys.RunCommand("dir.exe", "*.mp4");
+                    string propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
+                    var props = new LiteDBProps(new FileInfo(propDbFilePath));
+                    Echo(props, "initial state");
+                    props.Put("abc", 123);
+                    props.Put("ary", NewArray("a", null, 123));
+                    Console.WriteLine(props.Keys.Count);
+                    Echo(props.Keys);
+                    Echo(props);
+                    Echo(props.ToString());
+                    Console.WriteLine(props);
+                    EasyObject list = props.Get("list");
+                    list.Add(123);
+                    props.Put("list", list);
+                    Echo(props);
+                    Echo(props.Get("list3").AsList);
+                    //Echo(props.Get("count").Cast<int>());
+                    Echo(props.Get("count2").IsNull);
+                    Echo(props.Get("xyz", 0));
+                    Echo(props.Get("zzz", new List<string>()));
+                    Echo(props.Get("xxx", NewArray(1, 2, 3)));
                 }
-                string propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
-                var props = new LiteDBProps(new FileInfo(propDbFilePath));
-                Echo(props, "initial state");
-                props.Put("abc", 123);
-                props.Put("ary", NewArray("a", null, 123));
-                Console.WriteLine(props.Keys.Count);
-                Echo(props.Keys);
-                Echo(props);
-                Echo(props.ToString());
-                Console.WriteLine(props);
-                EasyObject list = props.Get("list");
-                list.Add(123);
-                props.Put("list", list);
-                Echo(props);
-                Echo(props.Get("list3").AsList);
-                //Echo(props.Get("count").Cast<int>());
-                Echo(props.Get("count2").IsNull);
-                Echo(props.Get("xyz", 0));
-                Echo(props.Get("zzz", new List<string>()));
-                Echo(props.Get("xxx", NewArray(1, 2, 3)));
+                string dtStr1 = Sys.DateTimeString(DateTime.Now);
+                string dtStr2 = Sys.DateTimeStringSafe(DateTime.Now);
+                Echo(dtStr1, "dtStr1");
+                Echo(dtStr2, "dtStr2");
             }
             catch (Exception e)
             {
