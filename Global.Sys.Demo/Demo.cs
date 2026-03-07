@@ -125,6 +125,10 @@ namespace Global
                 }
                 Log(Sys.CygpathWindows("/c/home13/cmd"));
                 Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
+                Sys.SetCwd("/p/@youtube-m4a");
+                Sys.RunCommand("dir.exe", "*.m4a");
+                Sys.SetCwd("/mnt/p/@youtube-1080p");
+                Sys.RunCommand("dir.exe", "*.mp4");
             }
             catch (Exception e)
             {
