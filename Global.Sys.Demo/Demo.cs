@@ -130,10 +130,15 @@ namespace Global
                     Echo(props.Get("zzz", new List<string>()));
                     Echo(props.Get("xxx", NewArray(1, 2, 3)));
                 }
-                string dtStr1 = Sys.DateTimeString(DateTime.Now);
-                string dtStr2 = Sys.DateTimeStringSafe(DateTime.Now);
+                var now = DateTime.Now;
+                string dtStr1 = Sys.DateTimeString(now);
+                string dtStr2 = Sys.DateTimeStringSafe(now);
                 Echo(dtStr1, "dtStr1");
                 Echo(dtStr2, "dtStr2");
+                string dStr1 = Sys.DateString(now);
+                string dStr2 = Sys.DateStringCompact(now);
+                Echo(dStr1, "dStr1");
+                Echo(dStr2, "dStr2");
             }
             catch (Exception e)
             {
