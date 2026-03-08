@@ -143,6 +143,9 @@ namespace Global
                 string homeFile = Sys.HomeFile("@sub", "nuget.org", "univlang", "tmp.https://www.youtube.com/watch?v=pTxCQjZooQ8&list=PLTvSv0jkjbk_EhZwZjDeNJIIGK25yNGt8");
                 Log(homeFile);
                 File.WriteAllText(homeFile, "ハロー©2");
+                homeFile = Sys.HomeFile("tmp", "a|b.txt");
+                Log(homeFile);
+                File.WriteAllText(homeFile, "ハロー©3");
             }
             catch (Exception e)
             {
