@@ -96,19 +96,6 @@ namespace Global
                         var mediaInfo2 = MediaInfo.ParseMediaUrl(line);
                         Log(mediaInfo2);
                     }
-                    var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
-                    Log(wc1, "wc1");
-                    var wc2 = Sys.ExpandWildcardList(
-                        "/p/@youtube-1080p/*",
-                        "/p/@youtube-2160p/*"
-                        );
-                    Log(wc2, "wc2");
-                    Log(Sys.CygpathWindows("/c/home13/cmd"));
-                    Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
-                    Sys.SetCwd("/p/@youtube-m4a");
-                    Sys.RunCommand("dir.exe", "*.m4a");
-                    Sys.SetCwd("/mnt/p/@youtube-1080p");
-                    Sys.RunCommand("dir.exe", "*.mp4");
                     string propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
                     var props = new LiteDBProps(new FileInfo(propDbFilePath));
                     Echo(props, "initial state");
@@ -139,6 +126,19 @@ namespace Global
                 string dStr2 = Sys.DateStringCompact(now);
                 Echo(dStr1, "dStr1");
                 Echo(dStr2, "dStr2");
+                var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
+                Log(wc1, "wc1");
+                var wc2 = Sys.ExpandWildcardList(
+                    "/p/@youtube-1080p/*",
+                    "/p/@youtube-2160p/*"
+                    );
+                Log(wc2, "wc2");
+                Log(Sys.CygpathWindows("/c/home13/cmd"));
+                Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
+                Sys.SetCwd("/p/@youtube-m4a");
+                Sys.RunCommand("dir.exe", "*.m4a");
+                Sys.SetCwd("/mnt/p/@youtube-1080p");
+                Sys.RunCommand("dir.exe", "*.mp4");
             }
             catch (Exception e)
             {
