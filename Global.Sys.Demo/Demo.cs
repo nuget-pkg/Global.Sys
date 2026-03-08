@@ -132,14 +132,17 @@ namespace Global
                         "/p/@youtube-2160p/*"
                         );
                     Log(wc2, "wc2");
+                    Log(Sys.CygpathWindows("/c/home13/cmd"));
+                    Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
+                    Log(Sys.CygpathWindows(@"C:\home13\cmd"));
+                    Sys.SetCwd("/p/@youtube-m4a");
+                    //Sys.RunCommand("dir.exe", "*.m4a");
+                    Sys.SetCwd("/mnt/p/@youtube-1080p");
+                    //Sys.RunCommand("dir.exe", "*.mp4");
                 }
-                Log(Sys.CygpathWindows("/c/home13/cmd"));
-                Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
-                Log(Sys.CygpathWindows(@"C:\home13\cmd"));
-                Sys.SetCwd("/p/@youtube-m4a");
-                //Sys.RunCommand("dir.exe", "*.m4a");
-                Sys.SetCwd("/mnt/p/@youtube-1080p");
-                //Sys.RunCommand("dir.exe", "*.mp4");
+                string homeFile = Sys.HomeFile("@sub", "nuget.org", "univlang", "tmp.https://www.youtube.com/watch?v=pTxCQjZooQ8&list=PLTvSv0jkjbk_EhZwZjDeNJIIGK25yNGt8");
+                Log(homeFile);
+                File.WriteAllText(homeFile, "ハロー©2");
             }
             catch (Exception e)
             {
