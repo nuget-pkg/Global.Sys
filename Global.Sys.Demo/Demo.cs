@@ -116,29 +116,30 @@ namespace Global
                     Echo(props.Get("xyz", 0));
                     Echo(props.Get("zzz", new List<string>()));
                     Echo(props.Get("xxx", NewArray(1, 2, 3)));
+                    var now = DateTime.Now;
+                    string dtStr1 = Sys.DateTimeString(now);
+                    string dtStr2 = Sys.DateTimeStringSafe(now);
+                    Echo(dtStr1, "dtStr1");
+                    Echo(dtStr2, "dtStr2");
+                    string dStr1 = Sys.DateString(now);
+                    string dStr2 = Sys.DateStringCompact(now);
+                    Echo(dStr1, "dStr1");
+                    Echo(dStr2, "dStr2");
+                    var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
+                    Log(wc1, "wc1");
+                    var wc2 = Sys.ExpandWildcardList(
+                        "/p/@youtube-1080p/*",
+                        "/p/@youtube-2160p/*"
+                        );
+                    Log(wc2, "wc2");
                 }
-                var now = DateTime.Now;
-                string dtStr1 = Sys.DateTimeString(now);
-                string dtStr2 = Sys.DateTimeStringSafe(now);
-                Echo(dtStr1, "dtStr1");
-                Echo(dtStr2, "dtStr2");
-                string dStr1 = Sys.DateString(now);
-                string dStr2 = Sys.DateStringCompact(now);
-                Echo(dStr1, "dStr1");
-                Echo(dStr2, "dStr2");
-                var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
-                Log(wc1, "wc1");
-                var wc2 = Sys.ExpandWildcardList(
-                    "/p/@youtube-1080p/*",
-                    "/p/@youtube-2160p/*"
-                    );
-                Log(wc2, "wc2");
                 Log(Sys.CygpathWindows("/c/home13/cmd"));
                 Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
+                Log(Sys.CygpathWindows(@"C:\home13\cmd"));
                 Sys.SetCwd("/p/@youtube-m4a");
-                Sys.RunCommand("dir.exe", "*.m4a");
+                //Sys.RunCommand("dir.exe", "*.m4a");
                 Sys.SetCwd("/mnt/p/@youtube-1080p");
-                Sys.RunCommand("dir.exe", "*.mp4");
+                //Sys.RunCommand("dir.exe", "*.mp4");
             }
             catch (Exception e)
             {
