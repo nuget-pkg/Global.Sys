@@ -68,7 +68,6 @@ namespace Global
                     info["videoId"] = m[1];
                     return info;
                 }
-                //https://www.redtube.com/103102541
                 return info;
             }
             else
@@ -103,7 +102,6 @@ namespace Global
                     info["videoId"] = m[1];
                 }
                 return info;
-
             }
         }
     }
