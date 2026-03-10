@@ -42,7 +42,9 @@ class PartialHTTPStream : Stream, IDisposable
                 HttpWebRequest? req = null;
                 try
                 {
+#pragma warning disable SYSLIB0014
                     req = HttpWebRequest.CreateHttp(Url);
+#pragma warning restore SYSLIB0014
                     req.Method = "HEAD";
                     req.AllowAutoRedirect = true;
                     length = req.GetResponse().ContentLength;
@@ -68,22 +70,15 @@ class PartialHTTPStream : Stream, IDisposable
     }
     public override int Read(byte[] buffer, int offset, int count)
     {
-        //Log(new { offset = offset, count = count, Position = Position, Length = Length });
         if (count <= 0) return 0;
         HttpWebRequest? req = null;
         try
         {
+#pragma warning disable SYSLIB0014
             req = HttpWebRequest.CreateHttp(Url);
+#pragma warning restore SYSLIB0014
             req.AddRange(Position);
             req.AllowAutoRedirect = true;
-            //try
-            //{
-            //    resp = req.GetResponse();
-            //}
-            //catch (WebException ex)
-            //{
-            //    throw ex;
-            //}
             resp = req.GetResponse();
             int rest = count;
             int nread = 0;

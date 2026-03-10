@@ -150,19 +150,32 @@ namespace Global
                 }
                 ShowDetail = true;
                 Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
-                Log(Global.TextEmbedder.TextEmbed("assets/text-embed-text-01.json"));
-                Log(Global.TextEmbedder.TextActual("assets/text-embed-text-01.json"));
-                Log(Global.TextEmbedder.SizeActual("assets/text-embed-text-01.json"));
+                string assetPath = "assets/text-embed-text-01.json";
+                Log(Global.TextEmbedder.GetEmbeddedText(assetPath));
+                Log(Global.TextEmbedder.GetOriginalContentAsText(assetPath));
+                Log(Global.TextEmbedder.GetOriginalContentSize(assetPath));
                 var bytes = Global.TextEmbedder.GetHeadBytes(
-                    "assets/text-embed-text-01.json",
-                    Global.TextEmbedder.SizeActual("assets/text-embed-text-01.json")
+                    assetPath,
+                    Global.TextEmbedder.GetOriginalContentSize(assetPath)
                     );
                 Log(bytes);
                 var stringFromBytes = Encoding.UTF8.GetString(bytes);
                 Log(stringFromBytes);
-                bytes = Global.TextEmbedder.ActualBytes("assets/text-embed-text-01.json");
+                bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath);
                 stringFromBytes = Encoding.UTF8.GetString(bytes!);
                 Log(stringFromBytes);
+                Log(TextEmbedder.HasEmbeddedText(assetPath));
+                Log(TextEmbedder.HasEmbeddedText("assets/list01.txt"));
+                Log(TextEmbedder.HasEmbeddedText("assets/not-exists.txt"));
+                Log(TextEmbedder.GetEmbeddedText("assets/not-exists.txt"));
+                Log(TextEmbedder.GetOriginalContentSize("assets/not-exists.txt"));
+                Log(TextEmbedder.GetOriginalContentAsText("assets/not-exists.txt"));
+                Log(TextEmbedder.GetOriginalContentAsBytes("assets/not-exists.txt"));
+                TextEmbedder.SetEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
+                Log(TextEmbedder.GetEmbeddedText("assets/text-embed-text-02.json"));
+                string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
+                TextEmbedder.SetEmbeddedText(jsonPath, "Hello World!");
+                Log(TextEmbedder.GetEmbeddedText(jsonPath));
             }
             catch (Exception e)
             {
