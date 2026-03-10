@@ -123,32 +123,33 @@ namespace Global
                     File.WriteAllText(homeFile, "ハロー©3");
                     //Sys.Exit(1);
                     Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
+                    EasyObject? mediaInfo;
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw");
+                    Log(mediaInfo, "(0)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw&list=RDE0vW5mS0y3U&index=9");
+                    Log(mediaInfo, "(1)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://youtube.com/watch?v=YYWwIyamQvw&list=RDE0vW5mS0y3U&index=9");
+                    Log(mediaInfo, "(2)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.xvideos.com/video.okdpihde0a3/_ai_");
+                    Log(mediaInfo, "(3)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://jp.xhamster.com/videos/i-found-out-my-best-friends-wife-was-doing-porn-xhXMwoP");
+                    Log(mediaInfo, "(4)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://jp.pornhub.com/view_video.php?viewkey=ph634d54a540f4a");
+                    Log(mediaInfo, "(5)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.redtube.com/103102541");
+                    Log(mediaInfo, "(6)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID：103102541】.mp4");
+                    Log(mediaInfo, "(7.1)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID＝103102541】.mp4");
+                    Log(mediaInfo, "(7.2)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\++++【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID=103102541】.mp4");
+                    Log(mediaInfo, "(7.3)");
+                    mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
+                    Log(mediaInfo, "(8)");
+                    Sys.SetCwd(@"C:\abc\def\xyz");
                 }
                 ShowDetail = false;
-                EasyObject? mediaInfo;
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw");
-                Log(mediaInfo, "(0)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw&list=RDE0vW5mS0y3U&index=9");
-                Log(mediaInfo, "(1)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://youtube.com/watch?v=YYWwIyamQvw&list=RDE0vW5mS0y3U&index=9");
-                Log(mediaInfo, "(2)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.xvideos.com/video.okdpihde0a3/_ai_");
-                Log(mediaInfo, "(3)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://jp.xhamster.com/videos/i-found-out-my-best-friends-wife-was-doing-porn-xhXMwoP");
-                Log(mediaInfo, "(4)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://jp.pornhub.com/view_video.php?viewkey=ph634d54a540f4a");
-                Log(mediaInfo, "(5)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.redtube.com/103102541");
-                Log(mediaInfo, "(6)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID：103102541】.mp4");
-                Log(mediaInfo, "(7.1)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID＝103102541】.mp4");
-                Log(mediaInfo, "(7.2)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"P:\@porn\++++【redtube】WOWGIRLS Gorgeous models Eva Elfie and Kate Rich getting fucked by their mutual friend【ID=103102541】.mp4");
-                Log(mediaInfo, "(7.3)");
-                mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
-                Log(mediaInfo, "(8)");
-                Sys.SetCwd(@"C:\abc\def\xyz");
+                Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
             }
             catch (Exception e)
             {
