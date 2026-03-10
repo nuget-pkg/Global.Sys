@@ -148,6 +148,7 @@ namespace Global
                 Log(mediaInfo, "(7.3)");
                 mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
                 Log(mediaInfo, "(8)");
+                Sys.SetCwd(@"C:\abc\def\xyz");
             }
             catch (Exception e)
             {
