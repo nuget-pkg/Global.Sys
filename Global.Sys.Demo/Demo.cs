@@ -148,8 +148,21 @@ namespace Global
                     Log(mediaInfo, "(8)");
                     Sys.SetCwd(@"C:\abc\def\xyz");
                 }
-                ShowDetail = false;
+                ShowDetail = true;
                 Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
+                Log(Global.TextEmbedder.TextEmbed("assets/text-embed-text-01.json"));
+                Log(Global.TextEmbedder.TextActual("assets/text-embed-text-01.json"));
+                Log(Global.TextEmbedder.SizeActual("assets/text-embed-text-01.json"));
+                var bytes = Global.TextEmbedder.GetHeadBytes(
+                    "assets/text-embed-text-01.json",
+                    Global.TextEmbedder.SizeActual("assets/text-embed-text-01.json")
+                    );
+                Log(bytes);
+                var stringFromBytes = Encoding.UTF8.GetString(bytes);
+                Log(stringFromBytes);
+                bytes = Global.TextEmbedder.ActualBytes("assets/text-embed-text-01.json");
+                stringFromBytes = Encoding.UTF8.GetString(bytes!);
+                Log(stringFromBytes);
             }
             catch (Exception e)
             {
