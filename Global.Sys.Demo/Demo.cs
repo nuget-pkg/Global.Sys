@@ -151,7 +151,7 @@ namespace Global
                 ShowDetail = true;
                 Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
                 string assetPath = "assets/text-embed-text-01.json";
-                Log(Global.TextEmbedder.GetEmbeddedText(assetPath));
+                Log(Global.TextEmbedder.ExtractEmbeddedText(assetPath));
                 Log(Global.TextEmbedder.GetOriginalContentAsText(assetPath));
                 Log(Global.TextEmbedder.GetOriginalContentSize(assetPath));
                 var bytes = Global.TextEmbedder.GetHeadBytes(
@@ -167,15 +167,15 @@ namespace Global
                 Log(TextEmbedder.HasEmbeddedText(assetPath));
                 Log(TextEmbedder.HasEmbeddedText("assets/list01.txt"));
                 Log(TextEmbedder.HasEmbeddedText("assets/not-exists.txt"));
-                Log(TextEmbedder.GetEmbeddedText("assets/not-exists.txt"));
+                Log(TextEmbedder.ExtractEmbeddedText("assets/not-exists.txt"));
                 Log(TextEmbedder.GetOriginalContentSize("assets/not-exists.txt"));
                 Log(TextEmbedder.GetOriginalContentAsText("assets/not-exists.txt"));
                 Log(TextEmbedder.GetOriginalContentAsBytes("assets/not-exists.txt"));
-                TextEmbedder.SetEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
-                Log(TextEmbedder.GetEmbeddedText("assets/text-embed-text-02.json"));
+                TextEmbedder.InjectEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
+                Log(TextEmbedder.ExtractEmbeddedText("assets/text-embed-text-02.json"));
                 string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
-                TextEmbedder.SetEmbeddedText(jsonPath, "Hello World!");
-                Log(TextEmbedder.GetEmbeddedText(jsonPath));
+                TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
+                Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
             }
             catch (Exception e)
             {

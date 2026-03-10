@@ -9,7 +9,6 @@ public static class TextEmbedder
 {
     const long MinimumCheckLength = 8192;
     //const long MinimumCheckLength = 256;
-
     static TextEmbedder()
     {
         //Log("TextEmbedder initialized");
@@ -164,7 +163,7 @@ public static class TextEmbedder
             return false;
         }
     }
-    static int seed = Environment.TickCount;
+    //static int seed = Environment.TickCount;
     public static string GetRandomDigits(/*int length*/)
     {
         string guid = Sys.GuidString();
@@ -178,7 +177,7 @@ public static class TextEmbedder
         //    length);
         //return randomDigits;
     }
-    public static void ClearEmbeddedText(string path)
+    public static void RemoveEmbeddedText(string path)
     {
         try
         {
@@ -195,13 +194,13 @@ public static class TextEmbedder
             Log(e.ToString());
         }
     }
-    public static void SetEmbeddedText(string path, string text)
+    public static void InjectEmbeddedText(string path, string text)
     {
         try
         {
             if (HasEmbeddedText(path))
             {
-                ClearEmbeddedText(path);
+                RemoveEmbeddedText(path);
             }
             string randomDigits = GetRandomDigits();
             string embedText = $"[embed:{randomDigits}]{text}[/embed:{randomDigits}]";
@@ -216,7 +215,7 @@ public static class TextEmbedder
             Log(e.ToString());
         }
     }
-    public static string? GetEmbeddedText(string path)
+    public static string? ExtractEmbeddedText(string path)
     {
         try
         {
