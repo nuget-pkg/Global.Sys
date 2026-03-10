@@ -146,7 +146,8 @@ namespace Global
                 homeFile = Sys.HomeFile("tmp", "a|b.txt");
                 Log(homeFile);
                 File.WriteAllText(homeFile, "ハロー©3");
-                Sys.Exit(1);
+                //Sys.Exit(1);
+                Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
             }
             catch (Exception e)
             {
