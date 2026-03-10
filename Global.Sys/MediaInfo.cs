@@ -81,7 +81,7 @@ namespace Global
                 {
                     ;
                 }
-                var info = NewObject("type", "file", "name", fileName, "site", "?");
+                var info = NewObject("type", "file", "fullName", url, "name", fileName, "site", "?");
                 fileName = Regex.Replace(fileName, "^[+]+", "");
                 List<string>? m;
                 m = Sys.FindFirstMatch(
