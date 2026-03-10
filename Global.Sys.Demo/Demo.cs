@@ -146,6 +146,7 @@ namespace Global
                 homeFile = Sys.HomeFile("tmp", "a|b.txt");
                 Log(homeFile);
                 File.WriteAllText(homeFile, "ハロー©3");
+                Sys.Exit(1);
             }
             catch (Exception e)
             {
