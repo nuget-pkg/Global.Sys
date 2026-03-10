@@ -176,6 +176,8 @@ namespace Global
                 string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
                 TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
                 Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
+                var eo = FromFile(jsonPath);
+                Log(eo, "eo");
             }
             catch (Exception e)
             {
