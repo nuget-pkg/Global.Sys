@@ -203,7 +203,7 @@ public static class TextEmbedder
                 RemoveEmbeddedText(path);
             }
             string randomDigits = GetRandomDigits();
-            string embedText = $"//[embed:{randomDigits}]{text}[/embed:{randomDigits}]";
+            string embedText = $"//[embed:{randomDigits}]{text}[/embed:{randomDigits}]\n";
             byte[] embedBytes = Encoding.UTF8.GetBytes(embedText);
             using (var fs = new FileStream(path, FileMode.Append, FileAccess.Write))
             {
