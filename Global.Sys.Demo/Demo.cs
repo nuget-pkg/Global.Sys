@@ -202,6 +202,11 @@ namespace Global
                 embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
                 Log(embeddedText, "embeddedText(gitlab)");
 
+                var embedded1 = EasyObject.FromEmbedded("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
+                Log(embedded1, "embedded1(gitlab)");
+
+                var embedded2 = EasyObject.FromEmbedded("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1351.11/my-ls.exe?ref_type=tags");
+                Log(embedded2, "embedded2(gitlab)");
             }
             catch (Exception e)
             {
