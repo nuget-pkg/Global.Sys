@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-		<Version>2026.0311.1526.47</Version>
+		<Version>2026.0311.1620.15</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>
@@ -60,7 +60,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.4" />
-		<PackageReference Include="EasyObject" Version="2026.311.1356.59" />
+		<PackageReference Include="EasyObject" Version="2026.311.1606.2" />
 		<PackageReference Include="LiteDB" Version="5.0.21" />
 	</ItemGroup>
 </Project>
