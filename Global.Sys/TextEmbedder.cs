@@ -56,42 +56,23 @@ public static class TextEmbedder
     }
     private static long GetLength(string path)
     {
-        try
+        if (path.StartsWith("http:") || path.StartsWith("https:"))
         {
-            if (path.StartsWith("http:") || path.StartsWith("https:"))
-            {
-                using (var fs = new PartialHTTPStream(path))
-                {
-                    return fs.Length;
-                }
-            }
-            using (var fs = File.OpenRead(path))
+            using (var fs = new PartialHTTPStream(path))
             {
                 return fs.Length;
             }
         }
-        catch (Exception /*e*/)
+        using (var fs = File.OpenRead(path))
         {
-            //Log(e.ToString());
-            return 0;
+            return fs.Length;
         }
     }
     public static byte[] GetHeadBytes(string path, long size)
     {
-        try
+        if (path.StartsWith("http:") || path.StartsWith("https:"))
         {
-            if (path.StartsWith("http:") || path.StartsWith("https:"))
-            {
-                using (var fs = new PartialHTTPStream(path))
-                {
-                    long fileLen = fs.Length;
-                    if (size > fileLen) size = fileLen;
-                    byte[] result = new byte[size];
-                    fs.Read(result, 0, result.Length);
-                    return result;
-                }
-            }
-            using (var fs = File.OpenRead(path))
+            using (var fs = new PartialHTTPStream(path))
             {
                 long fileLen = fs.Length;
                 if (size > fileLen) size = fileLen;
@@ -100,30 +81,20 @@ public static class TextEmbedder
                 return result;
             }
         }
-        catch (Exception /*e*/)
+        using (var fs = File.OpenRead(path))
         {
-            //Log(e.ToString());
-            return [];
+            long fileLen = fs.Length;
+            if (size > fileLen) size = fileLen;
+            byte[] result = new byte[size];
+            fs.Read(result, 0, result.Length);
+            return result;
         }
     }
     public static byte[] GetTailBytes(string path, long size)
     {
-        try
+        if (path.StartsWith("http:") || path.StartsWith("https:"))
         {
-            if (path.StartsWith("http:") || path.StartsWith("https:"))
-            {
-                using (var fs = new PartialHTTPStream(path))
-                {
-                    long fileLen = fs.Length;
-                    if (size > fileLen) size = fileLen;
-                    long pos = fileLen - size;
-                    byte[] result = new byte[size];
-                    fs.Seek(pos, SeekOrigin.Begin);
-                    fs.Read(result, 0, result.Length);
-                    return result;
-                }
-            }
-            using (var fs = File.OpenRead(path))
+            using (var fs = new PartialHTTPStream(path))
             {
                 long fileLen = fs.Length;
                 if (size > fileLen) size = fileLen;
@@ -134,174 +105,124 @@ public static class TextEmbedder
                 return result;
             }
         }
-        catch (Exception /*e*/)
+        using (var fs = File.OpenRead(path))
         {
-            //Log(e.ToString());
-            return [];
+            long fileLen = fs.Length;
+            if (size > fileLen) size = fileLen;
+            long pos = fileLen - size;
+            byte[] result = new byte[size];
+            fs.Seek(pos, SeekOrigin.Begin);
+            fs.Read(result, 0, result.Length);
+            return result;
         }
     }
     public static bool HasEmbeddedText(string path)
     {
-        try
+        long fileLen = GetLength(path);
+        long checkLen = MinimumCheckLength;
+        while (true)
         {
-            long fileLen = GetLength(path);
-            long checkLen = MinimumCheckLength;
-            while (true)
-            {
-                if (checkLen > fileLen) checkLen = fileLen;
-                byte[] check = GetTailBytes(path, checkLen);
-                SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
-                if (checkResult.EndPos < 0) return false;
-                if (checkResult.StartPos >= 0) return true;
-                if (checkLen >= fileLen) return false;
-                checkLen *= 2;
-            }
-        }
-        catch (Exception e)
-        {
-            Log(e.ToString());
-            return false;
+            if (checkLen > fileLen) checkLen = fileLen;
+            byte[] check = GetTailBytes(path, checkLen);
+            SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
+            if (checkResult.EndPos < 0) return false;
+            if (checkResult.StartPos >= 0) return true;
+            if (checkLen >= fileLen) return false;
+            checkLen *= 2;
         }
     }
-    //static int seed = Environment.TickCount;
     public static string GetRandomDigits(/*int length*/)
     {
         string guid = Sys.GuidString();
-        //return guid.Replace("-", "");
         return guid;
-        //Random rnd = new Random(seed++);
-        //string randomDigits =
-        //    Sys.RandomString(rnd,
-        //    ["a", "b", "c", "d", "e", "f",
-        //    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-        //    length);
-        //return randomDigits;
     }
     public static void RemoveEmbeddedText(string path)
     {
-        try
+        if (path.StartsWith("http:") || path.StartsWith("https:"))
         {
-            long fileLen = GetLength(path);
-            long contentSize = GetOriginalContentSize(path);
-            if (fileLen == contentSize) return;
-            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Write))
-            {
-                fs.SetLength(contentSize);
-            }
+            throw new InvalidOperationException("Cannot remove embedded text from a URL");
         }
-        catch (Exception e)
+            long fileLen = GetLength(path);
+        long contentSize = GetOriginalContentSize(path);
+        if (fileLen == contentSize) return;
+        using (var fs = new FileStream(path, FileMode.Open, FileAccess.Write))
         {
-            Log(e.ToString());
+            fs.SetLength(contentSize);
         }
     }
     public static void InjectEmbeddedText(string path, string text)
     {
-        try
+        if (path.StartsWith("http:") || path.StartsWith("https:"))
         {
-            if (HasEmbeddedText(path))
-            {
-                RemoveEmbeddedText(path);
-            }
-            string randomDigits = GetRandomDigits();
-            string embedText = $"//[embed:{randomDigits}]{text}[/embed:{randomDigits}]\n";
-            byte[] embedBytes = Encoding.UTF8.GetBytes(embedText);
-            using (var fs = new FileStream(path, FileMode.Append, FileAccess.Write))
-            {
-                fs.Write(embedBytes, 0, embedBytes.Length);
-            }
+            throw new InvalidOperationException("Cannot inject embedded text to a URL");
         }
-        catch (Exception e)
+        if (HasEmbeddedText(path))
         {
-            Log(e.ToString());
+            RemoveEmbeddedText(path);
+        }
+        string randomDigits = GetRandomDigits();
+        string embedText = $"//[embed:{randomDigits}]{text}[/embed:{randomDigits}]\n";
+        byte[] embedBytes = Encoding.UTF8.GetBytes(embedText);
+        using (var fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+        {
+            fs.Write(embedBytes, 0, embedBytes.Length);
         }
     }
     public static string? ExtractEmbeddedText(string path)
     {
-        try
+        long fileLen = GetLength(path);
+        long checkLen = MinimumCheckLength;
+        while (true)
         {
-            long fileLen = GetLength(path);
-            long checkLen = MinimumCheckLength;
-            while (true)
+            if (checkLen > fileLen) checkLen = fileLen;
             {
-                if (checkLen > fileLen) checkLen = fileLen;
-                {
-                }
-                byte[] check = GetTailBytes(path, checkLen);
-                SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
-                if (checkResult.EndPos < 0) return null;
-                if (checkResult.StartPos >= 0)
-                {
-                    long len = checkResult.EndPos - checkResult.StartPos;
-                    byte[] result = new byte[len];
-                    Array.Copy(check, checkResult.StartPos, result, 0, len);
-                    return Encoding.UTF8.GetString(result).Trim();
-                }
-                if (checkLen >= fileLen)
-                {
-                    return null;
-                }
-                checkLen *= 2;
             }
-        }
-        catch (Exception e)
-        {
-            Log(e.ToString());
-            return null;
+            byte[] check = GetTailBytes(path, checkLen);
+            SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
+            if (checkResult.EndPos < 0) return null;
+            if (checkResult.StartPos >= 0)
+            {
+                long len = checkResult.EndPos - checkResult.StartPos;
+                byte[] result = new byte[len];
+                Array.Copy(check, checkResult.StartPos, result, 0, len);
+                return Encoding.UTF8.GetString(result).Trim();
+            }
+            if (checkLen >= fileLen)
+            {
+                return null;
+            }
+            checkLen *= 2;
         }
     }
     public static long GetOriginalContentSize(string path)
     {
-        try
+        long fileLen = GetLength(path);
+        long checkLen = MinimumCheckLength;
+        while (true)
         {
-            long fileLen = GetLength(path);
-            long checkLen = MinimumCheckLength;
-            while (true)
+            if (checkLen > fileLen) checkLen = fileLen;
+            byte[] check = GetTailBytes(path, checkLen);
+            SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
+            if (checkResult.EndPos < 0) return checkResult.Length;
+            if (checkResult.StartPos >= 0)
             {
-                if (checkLen > fileLen) checkLen = fileLen;
-                byte[] check = GetTailBytes(path, checkLen);
-                SearchResult checkResult = CheckTailBytes(fileLen - checkLen, check);
-                if (checkResult.EndPos < 0) return checkResult.Length;
-                if (checkResult.StartPos >= 0)
-                {
-                    return checkResult.Length;
-                }
-                if (checkLen >= fileLen)
-                {
-                    return checkResult.Length;
-                }
-                checkLen *= 2;
+                return checkResult.Length;
             }
-        }
-        catch (Exception e)
-        {
-            Log(e.ToString());
-            return 0;
+            if (checkLen >= fileLen)
+            {
+                return checkResult.Length;
+            }
+            checkLen *= 2;
         }
     }
     public static string? GetOriginalContentAsText(string path)
     {
-        try
-        {
-            long size = GetOriginalContentSize(path);
-            return Encoding.UTF8.GetString(GetHeadBytes(path, size));
-        }
-        catch (Exception e)
-        {
-            Log(e.ToString());
-            return null;
-        }
+        long size = GetOriginalContentSize(path);
+        return Encoding.UTF8.GetString(GetHeadBytes(path, size));
     }
     public static byte[]? GetOriginalContentAsBytes(string path)
     {
-        try
-        {
-            long size = GetOriginalContentSize(path);
-            return GetHeadBytes(path, size);
-        }
-        catch (Exception e)
-        {
-            Log(e.ToString());
-            return null;
-        }
+        long size = GetOriginalContentSize(path);
+        return GetHeadBytes(path, size);
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -147,37 +147,61 @@ namespace Global
                     mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
                     Log(mediaInfo, "(8)");
                     Sys.SetCwd(@"C:\abc\def\xyz");
+                    Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
+                    string assetPath = "assets/text-embed-text-01.json";
+                    Log(Global.TextEmbedder.ExtractEmbeddedText(assetPath));
+                    Log(Global.TextEmbedder.GetOriginalContentAsText(assetPath));
+                    Log(Global.TextEmbedder.GetOriginalContentSize(assetPath));
+                    var bytes = Global.TextEmbedder.GetHeadBytes(
+                        assetPath,
+                        Global.TextEmbedder.GetOriginalContentSize(assetPath)
+                        );
+                    Log(bytes);
+                    var stringFromBytes = Encoding.UTF8.GetString(bytes);
+                    Log(stringFromBytes);
+                    bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath);
+                    stringFromBytes = Encoding.UTF8.GetString(bytes!);
+                    Log(stringFromBytes);
+                    Log(TextEmbedder.HasEmbeddedText(assetPath));
+                    Log(TextEmbedder.HasEmbeddedText("assets/list01.txt"));
+                    Log(TextEmbedder.HasEmbeddedText("assets/not-exists.txt"));
+                    Log(TextEmbedder.ExtractEmbeddedText("assets/not-exists.txt"));
+                    Log(TextEmbedder.GetOriginalContentSize("assets/not-exists.txt"));
+                    Log(TextEmbedder.GetOriginalContentAsText("assets/not-exists.txt"));
+                    Log(TextEmbedder.GetOriginalContentAsBytes("assets/not-exists.txt"));
+                    TextEmbedder.InjectEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
+                    Log(TextEmbedder.ExtractEmbeddedText("assets/text-embed-text-02.json"));
+                    string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
+                    TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
+                    Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
+                    var eo = FromFile(jsonPath);
+                    Log(eo, "eo");
                 }
                 ShowDetail = true;
-                Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
-                string assetPath = "assets/text-embed-text-01.json";
-                Log(Global.TextEmbedder.ExtractEmbeddedText(assetPath));
-                Log(Global.TextEmbedder.GetOriginalContentAsText(assetPath));
-                Log(Global.TextEmbedder.GetOriginalContentSize(assetPath));
-                var bytes = Global.TextEmbedder.GetHeadBytes(
-                    assetPath,
-                    Global.TextEmbedder.GetOriginalContentSize(assetPath)
-                    );
-                Log(bytes);
-                var stringFromBytes = Encoding.UTF8.GetString(bytes);
-                Log(stringFromBytes);
-                bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath);
-                stringFromBytes = Encoding.UTF8.GetString(bytes!);
-                Log(stringFromBytes);
-                Log(TextEmbedder.HasEmbeddedText(assetPath));
-                Log(TextEmbedder.HasEmbeddedText("assets/list01.txt"));
-                Log(TextEmbedder.HasEmbeddedText("assets/not-exists.txt"));
-                Log(TextEmbedder.ExtractEmbeddedText("assets/not-exists.txt"));
-                Log(TextEmbedder.GetOriginalContentSize("assets/not-exists.txt"));
-                Log(TextEmbedder.GetOriginalContentAsText("assets/not-exists.txt"));
-                Log(TextEmbedder.GetOriginalContentAsBytes("assets/not-exists.txt"));
-                TextEmbedder.InjectEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
-                Log(TextEmbedder.ExtractEmbeddedText("assets/text-embed-text-02.json"));
-                string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
-                TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
-                Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
-                var eo = FromFile(jsonPath);
-                Log(eo, "eo");
+                string remoteJsonPath = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                var eo2 = FromUrl(remoteJsonPath);
+                Log(eo2, "eo2");
+
+                string json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
+                Log(json, "json");
+                var todo = FromJson(json);
+                Log(todo, "todo");
+
+                var todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
+                Log(todo2, "todo2");
+
+                string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                var embeddedEO = FromUrl(embeddedJsonUrl);
+                Log(embeddedEO, "embeddedEO(github)");
+                string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                Log(embeddedText, "embeddedText(github)");
+
+                embeddedJsonUrl = "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
+                embeddedEO = FromUrl(embeddedJsonUrl);
+                Log(embeddedEO, "embeddedEO(gitlab)");
+                embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                Log(embeddedText, "embeddedText(gitlab)");
+
             }
             catch (Exception e)
             {

@@ -61,8 +61,17 @@ class PartialHTTPStream : Stream, IDisposable
             return length.Value;
         }
     }
-    public PartialHTTPStream(string Url) {
-        this.Url = Url;
+    public PartialHTTPStream(string url) {
+        var m = Sys.FindFirstMatch(
+            url,
+            @"^(https://github[.]com/[^/]+/[^/]+/)blob(/.+)$",
+            @"^(https://gitlab[.]com/nuget-tools/nuget-assets/-/)blob(/.+)$"
+            );
+        if (m != null)
+        {
+            url = m[1] + "raw" + m[2];
+        }
+        this.Url = url;
     }
     public override void SetLength(long value)
     {
