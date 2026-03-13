@@ -212,6 +212,8 @@ namespace Global
                 string homeFile2 = Sys.HomeFile("tmp", "test.txt");
                 Log(homeFile2, "homeFile2 with empty HOME env");
                 //Sys.Crash("demo crash", exitCode: 123);
+
+                Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
             }
             catch (Exception e)
             {
