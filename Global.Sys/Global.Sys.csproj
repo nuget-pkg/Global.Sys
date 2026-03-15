@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
-		<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-		<Version>2026.0314.2046.24</Version>
+		<!--<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>-->
+		<TargetFrameworks>net462;net8.0</TargetFrameworks>
+		<Version>2026.0315.1806.49</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>

@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
 set -uvx
 set -e
-start devenv.exe Global.Sys.sln
+#start devenv.exe Global.Sys.sln
+devenv.exe Global.Sys.sln &
