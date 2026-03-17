@@ -1,28 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
-using Global;
 using static Global.EasyObject;
 
-namespace Global
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            try
-            {
+namespace Global {
+    public class Program {
+        public static void Main(string[] args) {
+            try {
                 Sys.SetupConsoleUTF8();
-                if (false)
-                {
+                if (false) {
                     ShowDetail = true;
                     Log(args, "args");
                     string stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
                     Log(stdout, "stdout");
-                    var match = Sys.FindFirstMatch("abc", "xyz", "[a-z]+");
+                    List<string> match = Sys.FindFirstMatch("abc", "xyz", "[a-z]+");
                     Echo(match);
                     match = Sys.FindFirstMatch("abc", "xyz");
                     Echo(match == null);
@@ -30,7 +22,7 @@ namespace Global
                     string surrogateRemoved = Sys.RemoveSurrogatePair(containsSurrogate);
                     Echo(surrogateRemoved);
 
-                    var dumped = FromJson("""
+                    EasyObject dumped = FromJson("""
                 {
                   name: "🔥引火★★帝国🔥",
                   job: "Leader",
@@ -46,34 +38,33 @@ namespace Global
                     Sys.DumpObjectAsJson(dumped, compact: true);
                     Sys.DumpObjectAsJson(dumped, keyAsSymbol: true);
                     Sys.DumpObjectAsJson(dumped, keyAsSymbol: true, removeSurrogatePair: true);
-                    var shuffled = dumped.Shuffle();
+                    EasyObject shuffled = dumped.Shuffle();
                     Sys.DumpObjectAsJson(shuffled, keyAsSymbol: true, removeSurrogatePair: true);
                     Sys.DumpObjectAsJson(shuffled.Take(2), keyAsSymbol: true, removeSurrogatePair: true);
-                    var db = new LiteDBProps("myDb1");
+                    LiteDBProps db = new LiteDBProps("myDb1");
                     db.DeleteAll();
                     db.Put("abc", 123);
                     db.Put("xyz", "hello ハロー©");
                     Log(db, "db");
-                    var exp = db.ExportToPlainObject();
+                    object exp = db.ExportToPlainObject();
                     Log(exp, "exp");
-                    var db2 = new LiteDBProps("myDb2");
+                    LiteDBProps db2 = new LiteDBProps("myDb2");
                     db2.ImportFromPlainObject(exp);
                     Log(db2, "db2");
-                    var json2 = db2.ExportToCommonJson();
+                    string json2 = db2.ExportToCommonJson();
                     Log(json2, "json2");
-                    var db3 = new LiteDBProps("myDb3");
+                    LiteDBProps db3 = new LiteDBProps("myDb3");
                     db3.ImportFromCommonJson(json2);
                     Log(db3, "db3");
-                    var playlistText = File.ReadAllText("assets/【ダウンロード候補】");
-                    var playlistLines = Sys.TextToLines(playlistText);
-                    foreach (var line in playlistLines)
-                    {
+                    string playlistText = File.ReadAllText("assets/【ダウンロード候補】");
+                    List<string> playlistLines = Sys.TextToLines(playlistText);
+                    foreach (string line in playlistLines) {
                         Log(line);
-                        var mediaInfo2 = MediaInfo.ParseMediaUrl(line);
+                        EasyObject mediaInfo2 = MediaInfo.ParseMediaUrl(line);
                         Log(mediaInfo2);
                     }
                     string propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
-                    var props = new LiteDBProps(new FileInfo(propDbFilePath));
+                    LiteDBProps props = new LiteDBProps(new FileInfo(propDbFilePath));
                     Echo(props, "initial state");
                     props.Put("abc", 123);
                     props.Put("ary", NewArray("a", null, 123));
@@ -92,7 +83,7 @@ namespace Global
                     Echo(props.Get("xyz", 0));
                     Echo(props.Get("zzz", new List<string>()));
                     Echo(props.Get("xxx", NewArray(1, 2, 3)));
-                    var now = DateTime.Now;
+                    DateTime now = DateTime.Now;
                     string dtStr1 = Sys.DateTimeString(now);
                     string dtStr2 = Sys.DateTimeStringSafe(now);
                     Echo(dtStr1, "dtStr1");
@@ -101,9 +92,9 @@ namespace Global
                     string dStr2 = Sys.DateStringCompact(now);
                     Echo(dStr1, "dStr1");
                     Echo(dStr2, "dStr2");
-                    var wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
+                    string[] wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
                     Log(wc1, "wc1");
-                    var wc2 = Sys.ExpandWildcardList(
+                    string[] wc2 = Sys.ExpandWildcardList(
                         "/p/@youtube-1080p/*",
                         "/p/@youtube-2160p/*"
                         );
@@ -152,12 +143,12 @@ namespace Global
                     Log(Global.TextEmbedder.ExtractEmbeddedText(assetPath));
                     Log(Global.TextEmbedder.GetOriginalContentAsText(assetPath));
                     Log(Global.TextEmbedder.GetOriginalContentSize(assetPath));
-                    var bytes = Global.TextEmbedder.GetHeadBytes(
+                    byte[] bytes = Global.TextEmbedder.GetHeadBytes(
                         assetPath,
                         Global.TextEmbedder.GetOriginalContentSize(assetPath)
                         );
                     Log(bytes);
-                    var stringFromBytes = Encoding.UTF8.GetString(bytes);
+                    string stringFromBytes = Encoding.UTF8.GetString(bytes);
                     Log(stringFromBytes);
                     bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath);
                     stringFromBytes = Encoding.UTF8.GetString(bytes!);
@@ -174,24 +165,24 @@ namespace Global
                     string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
                     TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
                     Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
-                    var eo = FromFile(jsonPath);
+                    EasyObject eo = FromFile(jsonPath);
                     Log(eo, "eo");
                 }
                 ShowDetail = true;
                 string remoteJsonPath = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-                var eo2 = FromUrl(remoteJsonPath);
+                EasyObject eo2 = FromUrl(remoteJsonPath);
                 Log(eo2, "eo2");
 
                 string json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
                 Log(json, "json");
-                var todo = FromJson(json);
+                EasyObject todo = FromJson(json);
                 Log(todo, "todo");
 
-                var todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
+                EasyObject todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
                 Log(todo2, "todo2");
 
                 string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-                var embeddedEO = FromUrl(embeddedJsonUrl);
+                EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
                 Log(embeddedEO, "embeddedEO(github)");
                 string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
                 Log(embeddedText, "embeddedText(github)");
@@ -202,10 +193,10 @@ namespace Global
                 embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
                 Log(embeddedText, "embeddedText(gitlab)");
 
-                var embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
+                EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
                 Log(embedded1, "embedded1(gitlab)");
 
-                var embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1351.11/my-ls.exe?ref_type=tags");
+                EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1351.11/my-ls.exe?ref_type=tags");
                 Log(embedded2, "embedded2(gitlab)");
 
                 Environment.SetEnvironmentVariable("HOME", "");
@@ -214,9 +205,16 @@ namespace Global
                 //Sys.Crash("demo crash", exitCode: 123);
 
                 Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
+                Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
+
+                string fname = "[1080p]🔥引火★★帝国🔥:name?.txt";
+                Log(Sys.AdjustFileName(fname), "adjusted file name");
+                Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
+                Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
+
+                //AdjustFileName
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 Sys.Crash(e);
             }
         }

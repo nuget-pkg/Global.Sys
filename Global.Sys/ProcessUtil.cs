@@ -2,24 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Global
-{
-    public static class ProcessUtil
-    {
+namespace Global {
+    public static class ProcessUtil {
         public static bool StartHiddenWindowProcess(
             string exePath,
             string[] args,
             Dictionary<string, string>? vars = null
-            )
-        {
+            ) {
             string processArgumentsString = "";
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (i > 0)
-                {
+            for (int i = 0; i < args.Length; i++) {
+                if (i > 0) {
                     processArgumentsString += " ";
                 }
-                processArgumentsString = ((!args[i].Contains(" ")) ? (processArgumentsString + args[i]) : (processArgumentsString + "\"" + args[i] + "\""));
+                processArgumentsString = (!args[i].Contains(" ")) ? (processArgumentsString + args[i]) : (processArgumentsString + "\"" + args[i] + "\"");
             }
             Process process = new Process();
             process.StartInfo.RedirectStandardOutput = true;
@@ -29,10 +24,8 @@ namespace Global
             process.StartInfo.FileName = exePath;
             process.StartInfo.Arguments = processArgumentsString;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (vars != null)
-            {
-                foreach (string key in vars.Keys)
-                {
+            if (vars != null) {
+                foreach (string key in vars.Keys) {
                     process.StartInfo.EnvironmentVariables[key] = vars[key];
                 }
             }
@@ -43,8 +36,7 @@ namespace Global
             string programPath,
             string extension, /* with dot, e.g. ".txt" */
             string productName,
-            string description)
-        {
+            string description) {
 #if NETFRAMEWORK
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
 #else
