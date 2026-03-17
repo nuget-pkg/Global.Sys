@@ -207,7 +207,7 @@ namespace Global {
                 Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
                 Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
 
-                string fname = "[1080p]🔥引火★★帝国🔥:name?.txt";
+                string fname = "[1080p](🔥引火★★帝国🔥):name?.txt";
                 Log(Sys.AdjustFileName(fname), "adjusted file name");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");

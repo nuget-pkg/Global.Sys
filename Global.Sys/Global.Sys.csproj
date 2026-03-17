@@ -3,7 +3,7 @@
 		<LangVersion>latest</LangVersion>
 		<!--<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>-->
 		<TargetFrameworks>net462;net8.0</TargetFrameworks>
-		<Version>2026.0317.1809.54</Version>
+		<Version>2026.0318.0824.19</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>
@@ -60,10 +60,7 @@
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<!-- System.Text.Encoding.CodePages is loaded in EasyObject package.
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.5" />
-		-->
-		<PackageReference Include="EasyObject" Version="2026.314.1959.23" />
+		<PackageReference Include="EasyObject" Version="2026.318.724.57" />
 		<PackageReference Include="LiteDB" Version="5.0.21" />
 	</ItemGroup>
 </Project>
