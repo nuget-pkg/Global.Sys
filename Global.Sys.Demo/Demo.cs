@@ -10,7 +10,7 @@ namespace Global {
             try {
                 Sys.SetupConsoleUTF8();
                 UseAnsiConsole = true;
-                if (true) {
+                if (false) {
                     ShowDetail = true;
                     Log(args, "args");
                     string stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
@@ -167,53 +167,62 @@ namespace Global {
                     Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
                     EasyObject eo = FromFile(jsonPath);
                     Log(eo, "eo");
+                    string remoteJsonPath = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                    EasyObject eo2 = FromUrl(remoteJsonPath);
+                    Log(eo2, "eo2");
+
+                    string json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
+                    Log(json, "json");
+                    EasyObject todo = FromJson(json);
+                    Log(todo, "todo");
+
+                    EasyObject todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
+                    Log(todo2, "todo2");
+
+                    string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                    EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
+                    Log(embeddedEO, "embeddedEO(github)");
+                    string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                    Log(embeddedText, "embeddedText(github)");
+
+                    embeddedJsonUrl = "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
+                    embeddedEO = FromUrl(embeddedJsonUrl);
+                    Log(embeddedEO, "embeddedEO(gitlab)");
+                    embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                    Log(embeddedText, "embeddedText(gitlab)");
+
+                    EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
+                    Log(embedded1, "embedded1(gitlab)");
+
+                    EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
+                    Log(embedded2, "embedded2(gitlab)");
+
+                    Environment.SetEnvironmentVariable("HOME", "");
+                    string homeFile2 = Sys.HomeFile("tmp", "test.txt");
+                    Log(homeFile2, "homeFile2 with empty HOME env");
+                    //Sys.Crash("demo crash", exitCode: 123);
+
+                    Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
+                    Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
+
+                    string fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
+                    Log(Sys.AdjustFileName(fname), "adjusted file name");
+                    Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
+                    Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
+                    //Sys.Sleep(1000);
+                    //Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
                 }
                 ShowDetail = true;
-                string remoteJsonPath = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-                EasyObject eo2 = FromUrl(remoteJsonPath);
-                Log(eo2, "eo2");
-
-                string json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
-                Log(json, "json");
-                EasyObject todo = FromJson(json);
-                Log(todo, "todo");
-
-                EasyObject todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
-                Log(todo2, "todo2");
-
-                string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-                EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
-                Log(embeddedEO, "embeddedEO(github)");
-                string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
-                Log(embeddedText, "embeddedText(github)");
-
-                embeddedJsonUrl = "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
-                embeddedEO = FromUrl(embeddedJsonUrl);
-                Log(embeddedEO, "embeddedEO(gitlab)");
-                embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
-                Log(embeddedText, "embeddedText(gitlab)");
-
-                EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
-                Log(embedded1, "embedded1(gitlab)");
-
-                EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
-                Log(embedded2, "embedded2(gitlab)");
-
-                Environment.SetEnvironmentVariable("HOME", "");
-                string homeFile2 = Sys.HomeFile("tmp", "test.txt");
-                Log(homeFile2, "homeFile2 with empty HOME env");
-                //Sys.Crash("demo crash", exitCode: 123);
-
-                Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
-                Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
-
-                string fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
-                Log(Sys.AdjustFileName(fname), "adjusted file name");
-                Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
-                Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
-
-                Sys.Sleep(1000);
-                Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
+                DebugOutput = false;
+                var gitRoot = Sys.FindGitRoot(Sys.GetCwd());
+                Log(gitRoot, "gitRoot");
+                string creatdZipPath = Sys.ZipDirectory(Sys.GitProjectFolder(Sys.GetCwd(), "Global.Sys.Demo", "assets")!);
+                Log(creatdZipPath, "creatdZipPath");
+                var zipInfo = new FileInfo(creatdZipPath);
+                Log(zipInfo.Length, "zipInfo.Length");
+#if false
+                Sys.Crash();
+#endif
             }
             catch (Exception e) {
                 Sys.Crash(e);
