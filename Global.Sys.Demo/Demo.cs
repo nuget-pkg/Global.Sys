@@ -196,7 +196,7 @@ namespace Global {
                 EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
                 Log(embedded1, "embedded1(gitlab)");
 
-                EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1351.11/my-ls.exe?ref_type=tags");
+                EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
                 Log(embedded2, "embedded2(gitlab)");
 
                 Environment.SetEnvironmentVariable("HOME", "");
