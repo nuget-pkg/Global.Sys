@@ -9,12 +9,13 @@ namespace Global {
         public static void Main(string[] args) {
             try {
                 Sys.SetupConsoleUTF8();
-                if (false) {
+                UseAnsiConsole = true;
+                if (true) {
                     ShowDetail = true;
                     Log(args, "args");
                     string stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
                     Log(stdout, "stdout");
-                    List<string> match = Sys.FindFirstMatch("abc", "xyz", "[a-z]+");
+                    var match = Sys.FindFirstMatch("abc", "xyz", "[a-z]+");
                     Echo(match);
                     match = Sys.FindFirstMatch("abc", "xyz");
                     Echo(match == null);
@@ -46,7 +47,7 @@ namespace Global {
                     db.Put("abc", 123);
                     db.Put("xyz", "hello ハロー©");
                     Log(db, "db");
-                    object exp = db.ExportToPlainObject();
+                    var exp = db.ExportToPlainObject();
                     Log(exp, "exp");
                     LiteDBProps db2 = new LiteDBProps("myDb2");
                     db2.ImportFromPlainObject(exp);
@@ -60,7 +61,7 @@ namespace Global {
                     List<string> playlistLines = Sys.TextToLines(playlistText);
                     foreach (string line in playlistLines) {
                         Log(line);
-                        EasyObject mediaInfo2 = MediaInfo.ParseMediaUrl(line);
+                        var mediaInfo2 = MediaInfo.ParseMediaUrl(line);
                         Log(mediaInfo2);
                     }
                     string propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
@@ -92,20 +93,20 @@ namespace Global {
                     string dStr2 = Sys.DateStringCompact(now);
                     Echo(dStr1, "dStr1");
                     Echo(dStr2, "dStr2");
-                    string[] wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
-                    Log(wc1, "wc1");
-                    string[] wc2 = Sys.ExpandWildcardList(
-                        "/p/@youtube-1080p/*",
-                        "/p/@youtube-2160p/*"
-                        );
-                    Log(wc2, "wc2");
+                    //string[] wc1 = Sys.ExpandWildcard("/p/@youtube-1080p/*");
+                    //Log(wc1, "wc1");
+                    //string[] wc2 = Sys.ExpandWildcardList(
+                    //    "/p/@youtube-1080p/*",
+                    //    "/p/@youtube-2160p/*"
+                    //    );
+                    //Log(wc2, "wc2");
                     Log(Sys.CygpathWindows("/c/home13/cmd"));
                     Log(Sys.CygpathWindows("/mnt/c/home13/cmd"));
                     Log(Sys.CygpathWindows(@"C:\home13\cmd"));
-                    Sys.SetCwd("/p/@youtube-m4a");
-                    //Sys.RunCommand("dir.exe", "*.m4a");
-                    Sys.SetCwd("/mnt/p/@youtube-1080p");
-                    //Sys.RunCommand("dir.exe", "*.mp4");
+                    //Sys.SetCwd("/p/@youtube-m4a");
+                    ////Sys.RunCommand("dir.exe", "*.m4a");
+                    //Sys.SetCwd("/mnt/p/@youtube-1080p");
+                    ////Sys.RunCommand("dir.exe", "*.mp4");
                     string homeFile = Sys.HomeFile("@sub", "nuget.org", "univlang", "tmp.https://www.youtube.com/watch?v=pTxCQjZooQ8&list=PLTvSv0jkjbk_EhZwZjDeNJIIGK25yNGt8");
                     Log(homeFile);
                     File.WriteAllText(homeFile, "ハロー©2");
@@ -113,7 +114,6 @@ namespace Global {
                     Log(homeFile);
                     File.WriteAllText(homeFile, "ハロー©3");
                     //Sys.Exit(1);
-                    Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
                     EasyObject? mediaInfo;
                     mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw");
                     Log(mediaInfo, "(0)");
@@ -137,7 +137,7 @@ namespace Global {
                     Log(mediaInfo, "(7.3)");
                     mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
                     Log(mediaInfo, "(8)");
-                    Sys.SetCwd(@"C:\abc\def\xyz");
+                    //Sys.SetCwd(@"C:\abc\def\xyz");
                     Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
                     string assetPath = "assets/text-embed-text-01.json";
                     Log(Global.TextEmbedder.ExtractEmbeddedText(assetPath));
@@ -150,7 +150,7 @@ namespace Global {
                     Log(bytes);
                     string stringFromBytes = Encoding.UTF8.GetString(bytes);
                     Log(stringFromBytes);
-                    bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath);
+                    bytes = Global.TextEmbedder.GetOriginalContentAsBytes(assetPath)!;
                     stringFromBytes = Encoding.UTF8.GetString(bytes!);
                     Log(stringFromBytes);
                     Log(TextEmbedder.HasEmbeddedText(assetPath));
@@ -162,7 +162,7 @@ namespace Global {
                     Log(TextEmbedder.GetOriginalContentAsBytes("assets/not-exists.txt"));
                     TextEmbedder.InjectEmbeddedText("assets/text-embed-text-02.json", "Hello World!");
                     Log(TextEmbedder.ExtractEmbeddedText("assets/text-embed-text-02.json"));
-                    string jsonPath = Sys.HomeFile("@sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
+                    string jsonPath = Sys.HomeFile("+sub", "nuget.org", "Global.Sys", "Global.Sys.Demo", "assets", "text-embed-text-02.json");
                     TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
                     Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
                     EasyObject eo = FromFile(jsonPath);
@@ -211,6 +211,9 @@ namespace Global {
                 Log(Sys.AdjustFileName(fname), "adjusted file name");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
+
+                Sys.Sleep(1000);
+                Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
             }
             catch (Exception e) {
                 Sys.Crash(e);

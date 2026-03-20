@@ -1,10 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 namespace Global;
 
+#if GLOBAL_SYS
 class PartialHTTPStream : Stream, IDisposable {
+#else
+class EasyPartialHTTPStream : Stream, IDisposable {
+#endif
     Stream? stream = null;
     WebResponse? resp = null;
     public string Url {
@@ -53,8 +56,12 @@ class PartialHTTPStream : Stream, IDisposable {
             return length.Value;
         }
     }
+#if GLOBAL_SYS
     public PartialHTTPStream(string url) {
-        List<string>? m = Sys.FindFirstMatch(
+#else
+    public EasyPartialHTTPStream(string url) {
+#endif
+        var m = EasyObject.MatchForPatterns(
             url,
             @"^(https://github[.]com/[^/]+/[^/]+/)blob(/.+)$",
             @"^(https://gitlab[.]com/nuget-tools/nuget-assets/-/)blob(/.+)$"
@@ -123,8 +130,7 @@ class PartialHTTPStream : Stream, IDisposable {
     }
     public override void Flush() {
     }
-    new void Dispose() {
-        base.Dispose();
+    protected override void Dispose(bool disposing) {
         if (stream != null) {
             stream.Dispose();
             stream = null;
