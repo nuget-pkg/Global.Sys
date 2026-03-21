@@ -179,24 +179,6 @@ namespace Global {
                     EasyObject todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
                     Log(todo2, "todo2");
 
-                    string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-                    EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
-                    Log(embeddedEO, "embeddedEO(github)");
-                    string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
-                    Log(embeddedText, "embeddedText(github)");
-
-                    embeddedJsonUrl = "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
-                    embeddedEO = FromUrl(embeddedJsonUrl);
-                    Log(embeddedEO, "embeddedEO(gitlab)");
-                    embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
-                    Log(embeddedText, "embeddedText(gitlab)");
-
-                    EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
-                    Log(embedded1, "embedded1(gitlab)");
-
-                    EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
-                    Log(embedded2, "embedded2(gitlab)");
-
                     Environment.SetEnvironmentVariable("HOME", "");
                     string homeFile2 = Sys.HomeFile("tmp", "test.txt");
                     Log(homeFile2, "homeFile2 with empty HOME env");
@@ -221,6 +203,25 @@ namespace Global {
                 Log(Sys.AdjustFileName(fname), "adjusted file name");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
+
+                string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
+                Log(embeddedEO, "embeddedEO(github)");
+                string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                Log(embeddedText, "embeddedText(github)");
+
+                embeddedJsonUrl = "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
+                embeddedEO = FromUrl(embeddedJsonUrl);
+                Log(embeddedEO, "embeddedEO(gitlab)");
+                embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
+                Log(embeddedText, "embeddedText(gitlab)");
+
+                ////EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
+                EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0321.1903.42/json-with-embedded-json.json?ref_type=tags");
+                Log(embedded1, "embedded1(gitlab)");
+
+                EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
+                Log(embedded2, "embedded2(gitlab)");
 #if false
                 Sys.Crash();
 #endif

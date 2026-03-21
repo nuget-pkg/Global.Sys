@@ -60,7 +60,7 @@
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="EasyObject" Version="2026.321.1347.49" />
+		<PackageReference Include="EasyObject" Version="2026.321.1907.31" />
 		<PackageReference Include="LiteDB" Version="5.0.21" />
 		<!--<PackageReference Include="UniversalEncoding" Version="2026.321.1240.48" />-->
 	</ItemGroup>
