@@ -204,7 +204,7 @@ namespace Global {
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
                 Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
 
-                string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
+                string embeddedJsonUrl = "https://github.com/nuget-pkg/Global.Sys/blob/2026.0321.1925.40/Global.Sys.Demo/assets/text-embed-text-02.json";
                 EasyObject embeddedEO = FromUrl(embeddedJsonUrl);
                 Log(embeddedEO, "embeddedEO(github)");
                 string embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
