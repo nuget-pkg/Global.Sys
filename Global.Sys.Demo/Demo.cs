@@ -205,10 +205,6 @@ namespace Global {
                     Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
                     Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
 
-                    string fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
-                    Log(Sys.AdjustFileName(fname), "adjusted file name");
-                    Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
-                    Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
                     //Sys.Sleep(1000);
                     //Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
                 }
@@ -220,6 +216,11 @@ namespace Global {
                 Log(creatdZipPath, "creatdZipPath");
                 var zipInfo = new FileInfo(creatdZipPath);
                 Log(zipInfo.Length, "zipInfo.Length");
+
+                string fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
+                Log(Sys.AdjustFileName(fname), "adjusted file name");
+                Log(Sys.AdjustFileName(fname, replaceSurrogate: ""), "adjusted file name (keeping surrogate pairs)");
+                Log(Sys.AdjustFileName(fname, replaceSurrogate: "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
 #if false
                 Sys.Crash();
 #endif

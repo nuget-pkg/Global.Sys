@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -471,61 +472,63 @@ namespace Global {
             return str;
         }
         public static string AdjustFileName(string fileName, string replaceSurrogate = "★") {
-            fileName = fileName
-                .Replace("!", "❢")
-                .Replace("！", "❢")
-                //.Replace("\"", "”")
-                .Replace("\"", "“")
-                //.Replace("'", "’")
-                .Replace("'", "‘")
-                .Replace("#", "＃")
-                .Replace("%", "％")
-                .Replace("&", "＆")
-                .Replace("(", "｟")
-                .Replace(")", "｠")
-                .Replace("（", "｟")
-                .Replace("）", "｠")
-                .Replace("^", "＾")
-                .Replace("~", "～")
-                .Replace("\\", "＼")
-                .Replace("|", "￤")
-                .Replace("｜", "￤")
-                .Replace("`", "｀")
-                .Replace(";", "；")
-                .Replace(":", "：")
-                .Replace("*", "＊")
-                .Replace("[", "⁅")
-                .Replace("]", "⁆")
-                .Replace("［", "⁅")
-                .Replace("］", "⁆")
-                .Replace("{", "〘")
-                .Replace("}", "〙")
-                .Replace("｛", "〘")
-                .Replace("｝", "〙")
-                .Replace("<", "≪")
-                .Replace(">", "≫")
-                .Replace("＜", "≪")
-                .Replace("＞", "≫")
-                .Replace("/", "／")
-                .Replace("?", "❔")
-                .Replace("？", "❔")
-                //〚あいうえお〛
-                //〖あいうえお〗
-                .Replace("　", " ")
-                ;
-            fileName = RemoveSurrogatePair(fileName, replaceSurrogate);
-            return fileName;
+            return UniversalTransformer.SafeFileName(fileName, replaceSurrogate: replaceSurrogate);
+            //fileName = fileName
+            //    .Replace("!", "❢")
+            //    .Replace("！", "❢")
+            //    //.Replace("\"", "”")
+            //    .Replace("\"", "“")
+            //    //.Replace("'", "’")
+            //    .Replace("'", "‘")
+            //    .Replace("#", "＃")
+            //    .Replace("%", "％")
+            //    .Replace("&", "＆")
+            //    .Replace("(", "｟")
+            //    .Replace(")", "｠")
+            //    .Replace("（", "｟")
+            //    .Replace("）", "｠")
+            //    .Replace("^", "＾")
+            //    .Replace("~", "～")
+            //    .Replace("\\", "＼")
+            //    .Replace("|", "￤")
+            //    .Replace("｜", "￤")
+            //    .Replace("`", "｀")
+            //    .Replace(";", "；")
+            //    .Replace(":", "：")
+            //    .Replace("*", "＊")
+            //    .Replace("[", "⁅")
+            //    .Replace("]", "⁆")
+            //    .Replace("［", "⁅")
+            //    .Replace("］", "⁆")
+            //    .Replace("{", "〘")
+            //    .Replace("}", "〙")
+            //    .Replace("｛", "〘")
+            //    .Replace("｝", "〙")
+            //    .Replace("<", "≪")
+            //    .Replace(">", "≫")
+            //    .Replace("＜", "≪")
+            //    .Replace("＞", "≫")
+            //    .Replace("/", "／")
+            //    .Replace("?", "❔")
+            //    .Replace("？", "❔")
+            //    //〚あいうえお〛
+            //    //〖あいうえお〗
+            //    .Replace("　", " ")
+            //    ;
+            //fileName = RemoveSurrogatePair(fileName, replaceSurrogate);
+            //return fileName;
         }
         public static string AdjustMetaData(string metadata, string replaceSurrogate = "★") {
-            metadata = metadata
-                //.Replace("\"", "”")
-                .Replace("\"", "“")
-                //.Replace("'", "’")
-                .Replace("'", "‘")
-                .Replace("\\", "＼")
-                ;
-            metadata = RemoveSurrogatePair(metadata, replaceSurrogate);
-            return metadata;
+            return UniversalTransformer.SafeMetaData(metadata, replaceSurrogate: replaceSurrogate);
+            //metadata = metadata
+            //    //.Replace("\"", "”")
+            //    .Replace("\"", "“")
+            //    //.Replace("'", "’")
+            //    .Replace("'", "‘")
+            //    .Replace("\\", "＼")
+            //    ;
+            //metadata = RemoveSurrogatePair(metadata, replaceSurrogate);
+            //return metadata;
         }
         public static string GetEnv(string name, string fallback = "") {
             return Environment.GetEnvironmentVariable(name) ?? fallback;
