@@ -20,7 +20,7 @@ namespace Global {
 #if GLOBAL_SYS
     public static partial class Sys {
 #else
-    internal static partial class EasySystem {
+    public static partial class EasySystem {
 #endif
         public static bool SilentFlag = false;
         public static bool IsWindowsPlatform() {
@@ -336,7 +336,6 @@ namespace Global {
             while (Marshal.ReadByte(s, len) != 0) {
                 ++len;
             }
-
             byte[] buffer = new byte[len];
             Marshal.Copy(s, buffer, 0, buffer.Length);
             return Encoding.UTF8.GetString(buffer);
