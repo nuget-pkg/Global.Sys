@@ -9,6 +9,7 @@ namespace Global {
         public static void Main(string[] args) {
             try {
                 Sys.SetupConsoleUTF8();
+                Console.Error.Write("\n");
                 UseAnsiConsole = true;
                 if (false) {
                     ShowDetail = true;
@@ -225,8 +226,7 @@ namespace Global {
 #if false
                 Sys.Crash();
 #endif
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Sys.Crash(e);
             }
         }
