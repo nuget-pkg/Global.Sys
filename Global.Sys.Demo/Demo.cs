@@ -223,6 +223,28 @@ namespace Global {
 
                 EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
                 Log(embedded2, "embedded2(gitlab:binary file)");
+
+                void LinkTest(string title, string url) {
+                    //LogWebLink(title, url);
+                    EchoWebLink(title, url);
+                }
+                LinkTest(
+                    "⭕️⁅🌐⁆@⁅反転mirror⁆パイパイ仮面でどうかしらん？ / 宝鐘マリン FULL 踊ってみた【練習用】",
+                    "https://www.youtube.com/watch?v=sLpodTN4xhI&list=PLTvSv0jkjbk9-emLIV2vM-0p7CeMnTYG2"
+                  );
+                LinkTest(
+                    "⭕️🈂️❝FG⁅ｼﾞﾝｷﾞｽｶﾝ⁆❞🈂️ファイターズガール「ジンギスカン」踊ってみた 歌詞付き",
+                    "https://www.youtube.com/watch?v=sLpodTN4xhI&list=PLTvSv0jkjbk9-emLIV2vM-0p7CeMnTYG2"
+                  );
+                LinkTest(
+                    "⭕️⁅🌐⁆@ラム:DANCING STAR 2026",
+                    "https://www.youtube.com/playlist?list=PLTvSv0jkjbk8gtWLMLXLHYrWio5ciOi8c"
+                  );
+                LinkTest(
+                    "⭕️⁅🌐⁆@エレクトロニック・ダンス・ミュージック",
+                    "https://www.youtube.com/playlist?list=PLTvSv0jkjbk_u4GZBJK74w7aWylX-8FSt"
+                  );
+
 #if false
                 Sys.Crash();
 #endif
