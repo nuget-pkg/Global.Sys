@@ -3,7 +3,7 @@
 		<LangVersion>latest</LangVersion>
 		<!--<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>-->
 		<TargetFrameworks>net462;net8.0</TargetFrameworks>
-		<Version>2026.0326.0747.35</Version>
+		<Version>2026.0326.0833.32</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>Global.Sys</RootNamespace>
@@ -60,7 +60,7 @@
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="EasyObject" Version="2026.326.535.10" />
+		<PackageReference Include="EasyObject" Version="2026.326.826.9" />
 		<PackageReference Include="LiteDB" Version="5.0.21" />
 		<!--<PackageReference Include="UniversalEncoding" Version="2026.321.1240.48" />-->
 	</ItemGroup>
