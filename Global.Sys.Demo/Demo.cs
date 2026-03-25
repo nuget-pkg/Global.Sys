@@ -222,7 +222,7 @@ namespace Global {
                 Log(embedded1, "embedded1(gitlab)");
 
                 EasyObject embedded2 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
-                Log(embedded2, "embedded2(gitlab)");
+                Log(embedded2, "embedded2(gitlab:binary file)");
 #if false
                 Sys.Crash();
 #endif
