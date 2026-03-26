@@ -475,20 +475,7 @@ namespace Global {
             Environment.SetEnvironmentVariable(name, value);
         }
         public static string SafeBaseName(string baseName) {
-            // [⭕ファイル名に使えない文字 - Google](https://bit.ly/invalid-filename-chars)
-            // \ / : * ? " < > |
-            baseName = baseName
-                .Replace("\\", "￥")
-                .Replace("/", "／")
-                .Replace(":", "：")
-                .Replace("*", "＊")
-                .Replace("?", "❓")
-                .Replace("\"", "“")
-                .Replace("<", "≪")
-                .Replace(">", "≫")
-                .Replace("|", "￤")
-                ;
-            return baseName;
+            return UniversalTransformer.SafeBaseName(baseName, followRecommendation: false);
         }
         public static string HomeFile(params string[] relatives) {
             string home = GetEnv("HOME", "");
