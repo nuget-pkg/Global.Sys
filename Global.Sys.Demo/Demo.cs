@@ -255,7 +255,12 @@ namespace Global {
 #if false
                 throw new NotImplementedException();
 #else
-                Sys.Crash();
+                Sys.Crash(new {
+                    abc = 123,
+                    xyz = new {
+                        test1 = new string[] { "A", "B", "C ハロー©" }
+                    }
+                });
 #endif
             } catch (Exception e) {
                 Sys.Crash(e);
