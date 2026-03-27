@@ -45,8 +45,7 @@ class EasyPartialHTTPStream : Stream, IDisposable {
                     req.Method = "HEAD";
                     req.AllowAutoRedirect = true;
                     length = req.GetResponse().ContentLength;
-                }
-                finally {
+                } finally {
                     if (req != null) {
                         // 連続呼び出しでエラーになる場合があるのでその対策
                         req.Abort();
@@ -61,7 +60,7 @@ class EasyPartialHTTPStream : Stream, IDisposable {
 #else
     public EasyPartialHTTPStream(string url) {
 #endif
-        var m = EasyObject.MatchForPatterns(
+        var m = EasySystem.FindFirstMatch(
             url,
             @"^(https://github[.]com/[^/]+/[^/]+/)blob(/.+)$",
             @"^(https://gitlab[.]com/nuget-tools/nuget-assets/-/)blob(/.+)$"
@@ -103,8 +102,7 @@ class EasyPartialHTTPStream : Stream, IDisposable {
             }
             Position += nread;
             return nread;
-        }
-        finally {
+        } finally {
             if (req != null) {
                 // 連続呼び出しでエラーになる場合があるのでその対策
                 req.Abort();

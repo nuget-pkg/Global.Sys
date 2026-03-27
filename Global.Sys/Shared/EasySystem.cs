@@ -8,13 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+#if USE_EASY_OBJECT
 using static Global.EasyObject;
+#endif
 
 namespace Global {
 #if GLOBAL_SYS
@@ -68,6 +69,7 @@ namespace Global {
             string decodedString = enc.GetString(byteUtf32);
             return decodedString + ellipsis;
         }
+#if USE_EASY_OBJECT
         public static void Crash(object? message = null, int exitCode = 1) {
             ShowDetail = false;
             ShowLineNumbers = false;
@@ -82,11 +84,13 @@ namespace Global {
             }
             string trace = Environment.StackTrace;
             List<string> lines = TextToLines(trace);
+            lines = lines.Skip(3).ToList();
             trace = "\n" + string.Join("\n", lines);
             Log(trace, "STACK TRACE");
             Log($"[!! ABORTING...WITH EXIT CODE {exitCode} !!]");
             Environment.Exit(exitCode);
         }
+#endif
         public static Process? OpenUrl(string url) {
             ProcessStartInfo pi = new ProcessStartInfo() {
                 FileName = url,
@@ -545,6 +549,7 @@ namespace Global {
             string contents = await response.Content.ReadAsStringAsync();
             return contents;
         }
+#if USE_EASY_OBJECT
         public static void DumpObjectAsJson(
             object? x,
             bool compact = false,
@@ -559,6 +564,7 @@ namespace Global {
                 );
             Console.Write(json + newline);
         }
+#endif
         public static void Sleep(int milliseconds) {
             Thread.Sleep(milliseconds);
         }
