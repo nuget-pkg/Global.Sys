@@ -232,7 +232,7 @@ try
     embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
     Log(embeddedText, "embeddedText(gitlab)");
 
-////EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
+    ////EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
     var embedded1 =
         ExtractFromFile(
             "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0321.1903.42/json-with-embedded-json.json?ref_type=tags");
@@ -276,6 +276,11 @@ try
         "⭕️⁅🌐⁆ ▶ ◉ ⁅超美麗アニメーション⁆ ◉",
         "https://www.youtube.com/watch?v=pXXu1HZ2O_U&list=PLTvSv0jkjbk9omW2O3POQEDOu2YYPYpV6"
     );
+    LinkTest(
+        "⭕️⁅🌐⁆@可愛いBUTTERFLY",
+        "https://www.youtube.com/watch?v=snMjVaSYrdY&list=PLTvSv0jkjbk-IF-j3VUnHRoqDL9lbgHpS"
+        );
+
 #if true
     //throw new NotImplementedException();
 #else
