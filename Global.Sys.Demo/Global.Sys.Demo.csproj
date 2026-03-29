@@ -32,6 +32,12 @@
 		<Reference Include="System.Xml" />
 		<Reference Include="System.Xml.Linq" />
 	</ItemGroup>
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);TEST_MINIxxx</DefineConstants>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="coverlet.collector" Version="8.0.1">
 			<PrivateAssets>all</PrivateAssets>

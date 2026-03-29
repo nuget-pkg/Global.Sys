@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Global;
+#if !TEST_MINI
 using static Global.EasyObject;
+#else
+using EasyObject = Global.MiniEasyObject;
+using static Global.MiniEasyObject;
+#endif
 
 // ReSharper disable HeuristicUnreachableCode
 #pragma warning disable CS0162 // 到達できないコードが検出されました
@@ -121,6 +126,7 @@ try
         Log(homeFile);
         File.WriteAllText(homeFile, "ハロー©3");
         //Sys.Exit(1);
+#if !TEST_MINI
         EasyObject mediaInfo;
         mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw");
         Log(mediaInfo, "(0)");
@@ -148,6 +154,7 @@ try
         Log(mediaInfo, "(7.3)");
         mediaInfo = MediaInfo.ParseMediaUrl(@"C:\テスト\フォルダ\ああああ [xhXMwoP].mp4");
         Log(mediaInfo, "(8)");
+#endif
         //Sys.SetCwd(@"C:\abc\def\xyz");
         Log(Sys.LimitStringLength("9MUSES - Glue (Areia Remix) ", 15));
         var assetPath = "assets/text-embed-text-01.json";
