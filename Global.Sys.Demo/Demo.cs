@@ -289,7 +289,7 @@ try
         );
 
 #if true
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
 #else
     Sys.Crash(new
     {
