@@ -57,8 +57,8 @@
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EasyObject" Version="2026.331.737.32" />
-    <PackageReference Include="MiniEasyObject" Version="2026.331.737.32" />
+    <PackageReference Include="EasyObject" Version="2026.331.1829.44" />
+    <PackageReference Include="MiniEasyObject" Version="2026.331.1903.44" />
     <PackageReference Include="LiteDB" Version="5.0.21" />
   </ItemGroup>
 </Project>
