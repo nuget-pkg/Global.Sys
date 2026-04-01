@@ -12,14 +12,11 @@ using static Global.MiniEasyObject;
 
 // ReSharper disable HeuristicUnreachableCode
 #pragma warning disable CS0162 // 到達できないコードが検出されました
-
-try
-{
-    Sys.SetupConsoleUTF8();
-    Console.Error.Write("\n");
+try {
     UseAnsiConsole = true;
-    if (false)
-    {
+    ShowLineNumbers = false;
+    Sys.SetupConsoleUTF8();
+    if (false) {
         ShowDetail = true;
         Log(args, "args");
         var stdout = Sys.GetProcessStdout(Encoding.UTF8, "bash", "-c", "ls -l");
@@ -31,7 +28,6 @@ try
         var containsSurrogate = "🔥引火★★帝国🔥";
         var surrogateRemoved = Sys.RemoveSurrogatePair(containsSurrogate);
         Echo(surrogateRemoved);
-
         var dumped = FromJson("""
                               {
                                 name: "🔥引火★★帝国🔥",
@@ -68,13 +64,11 @@ try
         Log(db3, "db3");
         var playlistText = File.ReadAllText("assets/【ダウンロード候補】");
         var playlistLines = Sys.TextToLines(playlistText);
-        foreach (var line in playlistLines)
-        {
+        foreach (var line in playlistLines) {
             Log(line);
             var mediaInfo2 = MediaInfo.ParseMediaUrl(line);
             Log(mediaInfo2);
         }
-
         var propDbFilePath = Sys.HomeFile("tmp", "abc.litedb");
         var props = new LiteDBProps(new FileInfo(propDbFilePath));
         Echo(props, "initial state");
@@ -190,27 +184,22 @@ try
             "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
         var eo2 = FromUrl(remoteJsonPath);
         Log(eo2, "eo2");
-
         var json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
         Log(json, "json");
         var todo = FromJson(json);
         Log(todo, "todo");
-
         var todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
         Log(todo2, "todo2");
-
         Environment.SetEnvironmentVariable("HOME", "");
         var homeFile2 = Sys.HomeFile("tmp", "test.txt");
         Log(homeFile2, "homeFile2 with empty HOME env");
         //Sys.Crash("demo crash", exitCode: 123);
-
         Log(Sys.CygpathWindows("/c/home16/cmd"), "cygpath1");
         Log(Sys.CygpathWindows("/mnt/c/home16/cmd"), "cygpath2");
 
         //Sys.Sleep(1000);
         //Sys.OpenUrl("https://github.com/nuget-pkg/Global.Sys");
     }
-
     ShowDetail = true;
     DebugOutput = false;
     var gitRoot = Sys.FindGitRoot(Sys.GetCwd());
@@ -219,19 +208,16 @@ try
     Log(creatdZipPath, "creatdZipPath");
     var zipInfo = new FileInfo(creatdZipPath);
     Log(zipInfo.Length, "zipInfo.Length");
-
     var fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
     Log(Sys.AdjustFileName(fname), "adjusted file name");
     Log(Sys.AdjustFileName(fname, ""), "adjusted file name (keeping surrogate pairs)");
     Log(Sys.AdjustFileName(fname, "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
-
     var embeddedJsonUrl =
         "https://github.com/nuget-pkg/Global.Sys/blob/2026.0321.1925.40/Global.Sys.Demo/assets/text-embed-text-02.json";
     var embeddedEo = FromUrl(embeddedJsonUrl);
     Log(embeddedEo, "embeddedEO(github)");
     var embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
     Log(embeddedText, "embeddedText(github)");
-
     embeddedJsonUrl =
         "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
     embeddedEo = FromUrl(embeddedJsonUrl);
@@ -244,17 +230,13 @@ try
         ExtractFromFile(
             "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0321.1903.42/json-with-embedded-json.json?ref_type=tags");
     Log(embedded1, "embedded1(gitlab)");
-
     var embedded2 =
         ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
     Log(embedded2, "embedded2(gitlab:binary file)");
-
-    void LinkTest(string title, string url)
-    {
+    void LinkTest(string title, string url) {
         //LogWebLink(title, url);
         EchoWebLink(title, url);
     }
-
     LinkTest(
         "⭕️⁅🌐⁆@⁅反転mirror⁆パイパイ仮面でどうかしらん？ / 宝鐘マリン FULL 踊ってみた【練習用】",
         "https://www.youtube.com/watch?v=sLpodTN4xhI&list=PLTvSv0jkjbk9-emLIV2vM-0p7CeMnTYG2"
@@ -286,8 +268,10 @@ try
     LinkTest(
         "⭕️⁅🌐⁆@可愛いBUTTERFLY",
         "https://www.youtube.com/watch?v=snMjVaSYrdY&list=PLTvSv0jkjbk-IF-j3VUnHRoqDL9lbgHpS"
-        );
-
+    );
+    Echo(
+        "⁅markup⁆[red]!! PLEASE SET[/] [green]⁅ORERA BROWSER⁆[/] [red]ON PC AS DEFAULT[/]...[purple]IT AUTOMATICALLY STARTS PLAYING VIDEOS EVEN WHEN OPENED FROM LINK ON[/] [green]WINDOWS-TERMINAL ETC[/] [red]!![/]"
+    );
 #if true
     throw new NotImplementedException();
 #else
@@ -301,7 +285,6 @@ try
     });
 #endif
 }
-catch (Exception e)
-{
+catch (Exception e) {
     Sys.Crash(e);
 }
