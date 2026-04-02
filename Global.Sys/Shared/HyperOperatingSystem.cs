@@ -32,17 +32,23 @@ namespace Global;
 public static partial class Sys {
 #else
 // ReSharper disable once PartialTypeWithSinglePart
-public static partial class OpenSystem {
+public static partial class HyperOperatingSystem {
 #endif
     public static bool SilentFlag = false;
     public static bool IsWindowsPlatform() {
 #if NETFRAMEWORK
         return Environment.OSVersion.Platform == PlatformID.Win32NT;
 #else
-            return OperatingSystem.IsWindows();
+        return OperatingSystem.IsWindows();
 #endif
     }
-
+    public static int Add2(int a, int b) {
+        return a + b;
+    }
+    public static string[] ShuffulStringArray(string[] arr) {
+        var cobj = Core.CoreObject.FromObject(arr);
+        return cobj.Shuffle().AsStringArray!;
+    }
     public static string ProfilePath() {
         return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
             .Replace('/', Path.DirectorySeparatorChar);
@@ -304,7 +310,7 @@ public static partial class OpenSystem {
             //Debug(exeFiles, title: "files");
             foreach (string file in exeFiles) {
                 //Debug(file);
-                string baseName = OpenSystem.GetBaseName(file, strongAlgorithm: true);
+                string baseName = HyperOperatingSystem.GetBaseName(file, strongAlgorithm: true);
                 //Debug(baseName, title: "baseName");
                 if (string.Equals(baseName, exeName, StringComparison.CurrentCultureIgnoreCase)) {
                     return file;
@@ -625,8 +631,7 @@ public static partial class OpenSystem {
         List<string> lines = TextToLines(text);
         SaveAllLines(path, lines, "\n");
     }
-    public static byte[] ReadFileHeadBytes(string path, int maxSize)
-    {
+    public static byte[] ReadFileHeadBytes(string path, int maxSize) {
         path = CygpathWindows(path);
         var fs = new FileStream(
             path,
@@ -639,17 +644,13 @@ public static partial class OpenSystem {
         Array.Copy(array, 0, result, 0, result.Length);
         return result;
     }
-
-    public static bool IsBinaryFile(string path)
-    {
+    public static bool IsBinaryFile(string path) {
         var head = ReadFileHeadBytes(path, 8000);
         for (var i = 0; i < head.Length; i++)
             if (head[i] == 0)
                 return true;
-
         return false;
     }
-
 #if USE_EASY_OBJECT
         public static void DumpObjectAsJson(
             object? x,
