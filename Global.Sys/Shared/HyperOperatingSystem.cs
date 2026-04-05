@@ -47,7 +47,7 @@ public static partial class HyperOperatingSystem {
     }
     public static string[] ShuffulStringArray(string[] arr) {
         var cobj = Core.CoreObject.FromObject(arr);
-        return cobj.Shuffle().AsStringArray!;
+        return cobj.Shuffle().AsStringArray;
     }
     public static string ProfilePath() {
         return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
@@ -292,7 +292,9 @@ public static partial class HyperOperatingSystem {
     public static string? FindExePath(string exe, Assembly assembly) {
         int bit = IntPtr.Size * 8;
         string? cwd = AssemblyDirectory(assembly);
-        if (cwd == null) return null;
+        if (cwd == null) {
+            return null;
+        }
         string? result = FindExePath(exe, cwd);
         if (result == null) {
             result = FindExePath(exe, $"{cwd}\\{bit}bit");
@@ -332,7 +334,9 @@ public static partial class HyperOperatingSystem {
 #pragma warning disable SYSLIB0012
         string? codeBase = assembly.CodeBase;
 #pragma warning restore SYSLIB0012
-        if (codeBase == null) return null;
+        if (codeBase == null) {
+            return null;
+        }
         UriBuilder uri = new UriBuilder(codeBase);
         string path = Uri.UnescapeDataString(uri.Path);
         return Path.GetDirectoryName(path)!;
@@ -533,13 +537,13 @@ public static partial class HyperOperatingSystem {
         return input;
     }
     public static string RemoveSurrogatePair(string str, string replaceSurrogate = "✅") {
-        return UniversalTransformer.ReplaceSurrogatePair(str, replaceSurrogate: replaceSurrogate);
+        return Universal.GeminiSuperTransformer.ReplaceSurrogatePair(str, replaceSurrogate: replaceSurrogate);
     }
     public static string AdjustFileName(string fileName, string replaceSurrogate = "✅") {
-        return UniversalTransformer.SafeFileName(fileName, replaceSurrogate: replaceSurrogate);
+        return Universal.GeminiSuperTransformer.SafeFileName(fileName, replaceSurrogate: replaceSurrogate);
     }
     public static string AdjustMetaData(string metadata, string replaceSurrogate = "✅") {
-        return UniversalTransformer.SafeMetaData(metadata, replaceSurrogate: replaceSurrogate);
+        return Universal.GeminiSuperTransformer.SafeMetaData(metadata, replaceSurrogate: replaceSurrogate);
     }
     public static string GetEnv(string name, string fallback = "") {
         return Environment.GetEnvironmentVariable(name) ?? fallback;
@@ -548,7 +552,7 @@ public static partial class HyperOperatingSystem {
         Environment.SetEnvironmentVariable(name, value);
     }
     public static string SafeBaseName(string baseName) {
-        return UniversalTransformer.SafeBaseName(baseName, followRecommendation: false);
+        return Universal.GeminiSuperTransformer.SafeBaseName(baseName, followRecommendation: false);
     }
     public static string HomeFile(params string[] relatives) {
         string home = GetEnv("HOME", "");
