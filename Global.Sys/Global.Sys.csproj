@@ -3,7 +3,7 @@
     <LangVersion>latest</LangVersion>
     <!--<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>-->
     <TargetFrameworks>net462;net8.0</TargetFrameworks>
-    <Version>2026.1118.1615.15</Version>
+    <Version>2026.1118.1617.37</Version>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>Global.Sys</RootNamespace>
