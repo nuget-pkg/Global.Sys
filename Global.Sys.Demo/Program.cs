@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Global;
 #if !TEST_MINI
-using static Global.EasyObject;
+using static Core.CoreObject;
 #else
 using EasyObject = Global.MiniEasyObject;
 using static Global.MiniEasyObject;
@@ -14,7 +14,7 @@ using static Global.MiniEasyObject;
 #pragma warning disable CS0162 // 到達できないコードが検出されました
 try {
     UseAnsiConsole = true;
-    ShowLineNumbers = false;
+    //ShowLineNumbers = false;
     Sys.SetupConsoleUTF8();
     if (false) {
         ShowDetail = true;
@@ -43,10 +43,8 @@ try {
         Sys.DumpObjectAsJson(dumped);
         Sys.DumpObjectAsJson(dumped, true);
         Sys.DumpObjectAsJson(dumped, keyAsSymbol: true);
-        Sys.DumpObjectAsJson(dumped, keyAsSymbol: true, removeSurrogatePair: true);
         var shuffled = dumped.Shuffle();
-        Sys.DumpObjectAsJson(shuffled, keyAsSymbol: true, removeSurrogatePair: true);
-        Sys.DumpObjectAsJson(shuffled.Take(2), keyAsSymbol: true, removeSurrogatePair: true);
+        Sys.DumpObjectAsJson(shuffled.Take(2), keyAsSymbol: true);
         var db = new LiteDBProps("myDb1");
         db.DeleteAll();
         db.Put("abc", 123);
@@ -121,7 +119,7 @@ try {
         File.WriteAllText(homeFile, "ハロー©3");
         //Sys.Exit(1);
 #if !TEST_MINI
-        EasyObject mediaInfo;
+        Core.CoreObject mediaInfo;
         mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw");
         Log(mediaInfo, "(0)");
         mediaInfo = MediaInfo.ParseMediaUrl(@"https://www.youtube.com/watch?v=YYWwIyamQvw&list=RDE0vW5mS0y3U&index=9");
@@ -178,18 +176,18 @@ try {
             "text-embed-text-02.json");
         TextEmbedder.InjectEmbeddedText(jsonPath, "Hello World!");
         Log(TextEmbedder.ExtractEmbeddedText(jsonPath));
-        var eo = FromFile(jsonPath);
-        Log(eo, "eo");
+        //var eo = FromFile(jsonPath);
+        //Log(eo, "eo");
         var remoteJsonPath =
             "https://github.com/nuget-pkg/Global.Sys/blob/2026.0311.1056.12/Global.Sys.Demo/assets/text-embed-text-02.json";
-        var eo2 = FromUrl(remoteJsonPath);
-        Log(eo2, "eo2");
-        var json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
-        Log(json, "json");
-        var todo = FromJson(json);
-        Log(todo, "todo");
-        var todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
-        Log(todo2, "todo2");
+        //var eo2 = FromUrl(remoteJsonPath);
+        //Log(eo2, "eo2");
+        //var json = Utf8StringFromUrl("https://jsonplaceholder.typicode.com/todos/1");
+        //Log(json, "json");
+        //var todo = FromJson(json);
+        //Log(todo, "todo");
+        //var todo2 = FromUrl("https://jsonplaceholder.typicode.com/todos/1");
+        //Log(todo2, "todo2");
         Environment.SetEnvironmentVariable("HOME", "");
         var homeFile2 = Sys.HomeFile("tmp", "test.txt");
         Log(homeFile2, "homeFile2 with empty HOME env");
@@ -204,38 +202,38 @@ try {
     DebugOutput = false;
     var gitRoot = Sys.FindGitRoot(Sys.GetCwd());
     Log(gitRoot, "gitRoot");
-    var creatdZipPath = Sys.ZipDirectory(Sys.GitProjectFolder(Sys.GetCwd(), "Global.Sys.Demo", "assets")!);
-    Log(creatdZipPath, "creatdZipPath");
-    var zipInfo = new FileInfo(creatdZipPath);
-    Log(zipInfo.Length, "zipInfo.Length");
+    //var creatdZipPath = Sys.ZipDirectory(Sys.GitProjectFolder(Sys.GetCwd(), "Global.Sys.Demo", "assets")!);
+    //Log(creatdZipPath, "creatdZipPath");
+    //var zipInfo = new FileInfo(creatdZipPath);
+    //Log(zipInfo.Length, "zipInfo.Length");
     var fname = """[1080p] <xml>aaa</xml> ; {Title}!? x=11+22-33; ,(🔥引火★★帝国🔥):"name1" 'name2'?.txt""";
     Log(Sys.AdjustFileName(fname), "adjusted file name");
     Log(Sys.AdjustFileName(fname, ""), "adjusted file name (keeping surrogate pairs)");
     Log(Sys.AdjustFileName(fname, "@"), "adjusted file name (spicifying surrogate pairs' replacement)");
     var embeddedJsonUrl =
         "https://github.com/nuget-pkg/Global.Sys/blob/2026.0321.1925.40/Global.Sys.Demo/assets/text-embed-text-02.json";
-    var embeddedEo = FromUrl(embeddedJsonUrl);
-    Log(embeddedEo, "embeddedEO(github)");
+    //var embeddedEo = FromUrl(embeddedJsonUrl);
+    //Log(embeddedEo, "embeddedEO(github)");
     var embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
     Log(embeddedText, "embeddedText(github)");
     embeddedJsonUrl =
         "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1156.53/text-embed-text-02.json?ref_type=tags";
-    embeddedEo = FromUrl(embeddedJsonUrl);
-    Log(embeddedEo, "embeddedEO(gitlab)");
+    //embeddedEo = FromUrl(embeddedJsonUrl);
+    //Log(embeddedEo, "embeddedEO(gitlab)");
     embeddedText = TextEmbedder.ExtractEmbeddedText(embeddedJsonUrl)!;
     Log(embeddedText, "embeddedText(gitlab)");
 
     ////EasyObject embedded1 = EasyObject.ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0311.1339.52/json-with-embedded-json.json?ref_type=tags");
-    var embedded1 =
-        ExtractFromFile(
-            "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0321.1903.42/json-with-embedded-json.json?ref_type=tags");
-    Log(embedded1, "embedded1(gitlab)");
-    var embedded2 =
-        ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
-    Log(embedded2, "embedded2(gitlab:binary file)");
+    //var embedded1 =
+    //    ExtractFromFile(
+    //        "https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0321.1903.42/json-with-embedded-json.json?ref_type=tags");
+    //Log(embedded1, "embedded1(gitlab)");
+    //var embedded2 =
+    //    ExtractFromFile("https://gitlab.com/nuget-tools/nuget-assets/-/blob/2026.0320.1027.27/my-ls.exe?ref_type=tags");
+    //Log(embedded2, "embedded2(gitlab:binary file)");
     void LinkTest(string title, string url) {
         //LogWebLink(title, url);
-        EchoWebLink(title, url);
+        //EchoWebLink(title, url);
     }
     LinkTest(
         "⭕️⁅🌐⁆@⁅反転mirror⁆パイパイ仮面でどうかしらん？ / 宝鐘マリン FULL 踊ってみた【練習用】",

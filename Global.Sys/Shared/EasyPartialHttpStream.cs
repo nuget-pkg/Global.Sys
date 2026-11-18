@@ -4,6 +4,7 @@ using System.Net;
 namespace Global;
 
 #if GLOBAL_SYS
+using HyperOperatingSystem = Global.Sys;
 class PartialHTTPStream : Stream, IDisposable {
 #else
 class EasyPartialHTTPStream : Stream, IDisposable {

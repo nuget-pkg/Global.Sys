@@ -4,7 +4,7 @@ namespace Global
     using System.Collections.Generic;
     using System.IO;
     using System.Text.RegularExpressions;
-    using static Global.EasyObject;
+    using static Core.CoreObject;
 
 #if GLOBAL_SYS
     public
@@ -13,7 +13,7 @@ namespace Global
 #endif
     static partial class MediaInfo
     {
-        public static EasyObject? ParseMediaUrl(string url)
+        public static Core.CoreObject? ParseMediaUrl(string url)
         {
             if (url.Contains("http://") || url.Contains("https://"))
             {

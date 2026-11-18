@@ -22,7 +22,7 @@ using System.Web;
 
 // ReSharper disable EmptyGeneralCatchClause
 #if USE_EASY_OBJECT
-using static Global.EasyObject;
+using static Core.CoreObject;
 #endif
 
 // ReSharper disable once CheckNamespace
@@ -89,6 +89,7 @@ public static partial class HyperOperatingSystem {
         };
         return Process.Start(pi);
     }
+#if false
     public static string ZipDirectory(string dir, string? zipout = null, string comment = "") {
         dir = Path.GetFullPath(dir);
         if (zipout == null) {
@@ -125,6 +126,7 @@ public static partial class HyperOperatingSystem {
         }
         return zipout;
     }
+#endif
     //public static void Exit(int exitCoed) {
     //    Console.Error.Write($"Exit() was called with exitCode: {exitCoed}." + "\n");
     //    Environment.Exit(exitCoed);
@@ -312,7 +314,7 @@ public static partial class HyperOperatingSystem {
             //Debug(exeFiles, title: "files");
             foreach (string file in exeFiles) {
                 //Debug(file);
-                string baseName = HyperOperatingSystem.GetBaseName(file, strongAlgorithm: true);
+                string baseName = GetBaseName(file, strongAlgorithm: true);
                 //Debug(baseName, title: "baseName");
                 if (string.Equals(baseName, exeName, StringComparison.CurrentCultureIgnoreCase)) {
                     return file;
@@ -660,18 +662,82 @@ public static partial class HyperOperatingSystem {
             object? x,
             bool compact = false,
             string newline = "\n",
-            bool keyAsSymbol = false,
-            bool removeSurrogatePair = false) {
-            string json = EasyObject.FromObject(x)
+            bool keyAsSymbol = false//,
+            //bool removeSurrogatePair = false
+            ) {
+            string json = Core.CoreObject.FromObject(x)
                 .ToJson(
                 indent: !compact,
-                keyAsSymbol: keyAsSymbol,
-                removeSurrogatePair: removeSurrogatePair
+                keyAsSymbol: keyAsSymbol//,
+                //removeSurrogatePair: removeSurrogatePair
                 );
             Console.Write(json + newline);
         }
         public static void Crash(object? message = null, int exitCode = 1) {
-            EasyObject.Abort(message, exitCode);
+        var _StackTrace_ = new System.Diagnostics.StackTrace(true);
+        StackFrame? CuurentStackFrame()
+        {
+            // Author: ❝Gemini (Google Large Language Model)❞さん
+            // See: https://gemini.google.com/share/9377a3e5f18f
+            var frame = _StackTrace_.GetFrame(1);
+            return frame;
         }
+        string CurrentSourceCodeLine()
+        {
+            // Author: ❝Gemini (Google Large Language Model)❞さん
+            // See: https://gemini.google.com/share/9377a3e5f18f
+            var frame = CuurentStackFrame();
+            var file = frame?.GetFileName();
+            var line = frame?.GetFileLineNumber();
+            // PDB があれば、ファイル名と行番号がメッセージに乗る
+            string location = (file != null) ? $"at file : {line}" : "";
+            return $"{location}";
+        }
+        ShowDetail = false;
+        //ShowLineNumbers = false;
+        UseAnsiConsole = true;
+        Log("⁅markup⁆[red][[!! ABORTING PROGRAM !!]][/]");
+        //UseAnsiConsole = false;
+        if (message != null && !(message is Exception)) Log(message, "MESSAGE (FOR ABORTING PROGRAM)");
+        if (message is Exception e)
+        {
+            var exTrace = e.ToString();
+            try
+            {
+                //exTrace = ReplacePathsWithUrls(exTrace);
+                Console.Error.WriteLine(
+                    exTrace
+                );
+                //_ViewInFavoriteEditor(CuurentStackFrame());
+                Message(exTrace, "EXCEPTION (FOR ABORTING PROGRAM)", msgBoxFlag: /*MB_ICONERROR*/ 0x00000010);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+                //_ViewInFavoriteEditor(CuurentStackFrame());
+                Message(ex.ToString(), "EXCEPTION (FOR ABORTING PROGRAM)",
+                    msgBoxFlag: /*MB_ICONERROR*/ 0x00000010);
+            }
+            //UseAnsiConsole = true;
+            Log($"⁅markup⁆[red][[!! ABORTING...WITH EXIT CODE {exitCode} !!]][/]");
+            //_ViewInFavoriteEditor(CuurentStackFrame());
+            Message(new { message, exitCode }, $"!! ABORTING...WITH EXIT CODE {exitCode} !!",
+                msgBoxFlag: /*MB_ICONERROR*/ 0x00000010);
+            Environment.Exit(exitCode);
+        }
+        var st = new StackTrace(true);
+        var trace = st.ToString();
+        ////var trace = Environment.StackTrace;
+        var lines = TextToLines(trace);
+        lines = lines.Skip(2).ToList();
+        trace = "\n" + string.Join("\n", lines);
+        //trace = ReplacePathsWithUrls(trace);
+        Log(trace, "STACK TRACE");
+        //UseAnsiConsole = true;
+        Log($"⁅markup⁆[red][[!! ABORTING...WITH EXIT CODE {exitCode} !!]][/]");
+        //_ViewInFavoriteEditor(CuurentStackFrame());
+        Message(message, "||◣ABORT(UNTITLED)◥||", msgBoxFlag: /*MB_ICONERROR*/ 0x00000010);
+        Environment.Exit(exitCode);
+    }
 #endif
 }
